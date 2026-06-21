@@ -6,18 +6,6 @@ import { getAccessToken } from '../../store/authStore'
 import useAuthStore from '../../store/authStore'
 import ThemeToggle from '../../components/ThemeToggle'
 
-function shuffleQuestion(question) {
-  if (!question) return question
-  const options = [...question.options]
-  const correctText = options[question.correct_index]
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [options[i], options[j]] = [options[j], options[i]]
-  }
-  const newCorrectIndex = options.indexOf(correctText)
-  return { ...question, options, correct_index: newCorrectIndex }
-}
-
 export default function Quiz() {
   const [quizState, setQuizState] = useState('idle')
   const [session, setSession] = useState(null)
@@ -30,6 +18,7 @@ export default function Quiz() {
   const [nextQuestion, setNextQuestion] = useState(null)
   const [correctCount, setCorrectCount] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
+  const [finalResult, setFinalResult] = useState(null)
   const [difficulty, setDifficulty] = useState('basic')
   const user = useAuthStore(s => s.user)
   const clearAuth = useAuthStore(s => s.clearAuth)
@@ -55,10 +44,11 @@ export default function Quiz() {
     try {
       const res = await api.post('/quiz/sessions', { technologyId, difficulty: diff })
       setSession(res.data.session)
-      setQuestion(shuffleQuestion(res.data.firstQuestion))
+      setQuestion(res.data.firstQuestion)
       setQuizState('active')
       setCorrectCount(0)
       setTotalQuestions(0)
+      setFinalResult(null)
       setResult(null)
       setExplanation('')
       setShowNext(false)
@@ -66,45 +56,49 @@ export default function Quiz() {
     finally { setLoading(false) }
   }
 
+  // Completing a session sends no score — the server recomputes it from the
+  // recorded answers and returns the authoritative numbers.
+  const completeSession = async () => {
+    try {
+      const res = await api.post(`/quiz/sessions/${session.id}/complete`)
+      setFinalResult(res.data)
+    } catch (err) { console.error(err) }
+  }
+
   const submitAnswer = async () => {
     if (!question || selectedAnswer === null) return
     setLoading(true)
     try {
       const res = await api.post(`/quiz/sessions/${session.id}/answer`, {
-        questionId: question._id,
+        questionId: question.id,
         answerIndex: selectedAnswer,
       })
-      const newTotal = totalQuestions + 1
-      const newCorrect = correctCount + (res.data.isCorrect ? 1 : 0)
-      setTotalQuestions(newTotal)
-      setCorrectCount(newCorrect)
+      // Local counters are display-only; the authoritative score comes from
+      // the server when the session is completed.
+      setTotalQuestions((t) => t + 1)
+      setCorrectCount((c) => c + (res.data.isCorrect ? 1 : 0))
       setResult({ isCorrect: res.data.isCorrect, updatedAbilityScore: res.data.updatedAbilityScore })
 
       if (res.data.isCorrect) {
         setExplanation('')
         if (res.data.nextQuestion) {
           setTimeout(() => {
-            setQuestion(shuffleQuestion(res.data.nextQuestion))
+            setQuestion(res.data.nextQuestion)
             setSelectedAnswer(null)
             setResult(null)
           }, 800)
         } else {
-          await api.post(`/quiz/sessions/${session.id}/complete`, {
-            correctCount: newCorrect, totalQuestions: newTotal,
-          })
+          await completeSession()
           setTimeout(() => setQuizState('complete'), 800)
         }
       } else {
+        // The server derives the question text and correct answer itself;
+        // we only tell it which question and which wrong option was chosen.
         streamExplanation({
-          questionId: question._id,
+          questionId: question.id,
           wrongAnswerIndex: selectedAnswer,
-          questionText: question.text,
-          wrongAnswer: question.options[selectedAnswer],
-          correctAnswer: question.options[question.correct_index], 
-          concept: question.concept,
-          technology: question.technology,
         })
-        setNextQuestion(res.data.nextQuestion ? shuffleQuestion(res.data.nextQuestion) : null)
+        setNextQuestion(res.data.nextQuestion || null)
         setShowNext(true)
       }
     } catch (err) { console.error(err) }
@@ -347,8 +341,8 @@ export default function Quiz() {
             <div style={{ borderTop: '0.5px solid var(--border)', paddingTop: '16px' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-3)', letterSpacing: '.06em', marginBottom: '12px' }}>// HOW IT WORKS</div>
               {[
-                { step: '01', text: 'Engine selects question closest to your θ' },
-                { step: '02', text: 'Answer — θ updates via IRT formula' },
+                { step: '01', text: 'Engine targets your weakest concept and matches question difficulty to your ability' },
+                { step: '02', text: 'Answer — difficulty tier adapts to your recent streak' },
                 { step: '03', text: 'Wrong answers trigger AI explanation' },
                 { step: '04', text: 'Mastery persists across sessions' },
               ].map(({ step, text }) => (
@@ -436,7 +430,7 @@ export default function Quiz() {
 
           {result && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', padding: '12px 16px', borderRadius: '8px', border: `0.5px solid ${result.isCorrect ? 'var(--correct)' : 'var(--wrong)'}`, background: result.isCorrect ? 'var(--correct-bg)' : 'var(--wrong-bg)', color: result.isCorrect ? 'var(--correct)' : 'var(--wrong)', marginBottom: '16px' }}>
-              {result.isCorrect ? '✓ correct' : '✗ incorrect'} — θ updated to {result.updatedAbilityScore.toFixed(4)}
+              {result.isCorrect ? '✓ correct' : '✗ incorrect'} — ability updated to {result.updatedAbilityScore.toFixed(4)}
             </div>
           )}
 
@@ -471,7 +465,7 @@ export default function Quiz() {
                     setExplanation('')
                     setShowNext(false)
                   } else {
-                    await api.post(`/quiz/sessions/${session.id}/complete`, { correctCount, totalQuestions })
+                    await completeSession()
                     setQuizState('complete')
                   }
                 }}
@@ -490,7 +484,7 @@ export default function Quiz() {
           <div style={{ flex: 1, height: '4px', background: 'var(--border)', borderRadius: '2px' }}>
             <div style={{ height: '4px', background: 'var(--accent)', borderRadius: '2px', width: `${abilityScore * 100}%`, transition: 'width .6s ease' }} />
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--accent)', whiteSpace: 'nowrap' }}>θ = {abilityScore.toFixed(4)}</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--accent)', whiteSpace: 'nowrap' }}>ability = {abilityScore.toFixed(4)}</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-3)', whiteSpace: 'nowrap' }}>{correctCount}/{totalQuestions} correct</div>
         </div>
       </div>
@@ -499,7 +493,11 @@ export default function Quiz() {
 
   // ─── COMPLETE ────────────────────────────────────────────────────────────
   if (quizState === 'complete') {
-    const pct = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0
+    const finalCorrect = finalResult?.correct_count ?? correctCount
+    const finalTotal = finalResult?.total_questions ?? totalQuestions
+    const pct = finalResult?.score_percent != null
+      ? Math.round(finalResult.score_percent)
+      : (finalTotal > 0 ? Math.round((finalCorrect / finalTotal) * 100) : 0)
     return (
       <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
         {topBar}
@@ -512,7 +510,7 @@ export default function Quiz() {
               {pct}%
             </div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', color: 'var(--text-2)', marginBottom: '6px' }}>
-              {correctCount} of {totalQuestions} correct
+              {finalCorrect} of {finalTotal} correct
             </div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-3)' }}>
               // mastery data written to database

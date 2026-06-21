@@ -4,7 +4,7 @@ const { AppError } = require('../utils/errors');
 const isTest = process.env.NODE_ENV === 'test';
 
 // Shared error handler for consistent shape
-function rateLimitHandler(req, res, next, options) {
+function rateLimitHandler(req, res, next, _options) {
   next(new AppError('Too many requests', 429, 'RATE_LIMIT_EXCEEDED'));
 }
 
@@ -31,14 +31,15 @@ const authLimiter = isTest
       keyGenerator: (req) => ipKeyGenerator(req),
     });
 
-// AI limiter — tied to user identity for cost control
+// AI limiter — tied to user identity for cost control.
+// Keyed on req.user.sub (the JWT subject); falls back to IP for safety.
 const aiLimiter = isTest
   ? noop
   : rateLimit({
       windowMs: 60 * 1000,
       max: 20, // relaxed for dev/testing
       handler: rateLimitHandler,
-      keyGenerator: (req) => req.user?.id || ipKeyGenerator(req),
+      keyGenerator: (req) => req.user?.sub || ipKeyGenerator(req),
     });
 
 module.exports = {

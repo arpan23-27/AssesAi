@@ -6,7 +6,12 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --testPathPatterns=tests/",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "migrate": "node src/migrate.js",
+    "seed": "node src/seeds/technologies.seed.js && node src/seeds/questions.seed.js",
+    "lint": "eslint \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.{js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{js,json}\""
   },
   "keywords": [],
   "author": "",
@@ -21,14 +26,17 @@
     "express-rate-limit": "^8.3.2",
     "ioredis": "^5.10.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.4.1",
     "openai": "^6.34.0",
     "pg": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "cross-env": "^10.1.0",
-    "jest": "^30.3.0",
+    "eslint": "^9.39.4",
+    "globals": "^15.15.0",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.4",
     "supertest": "^7.2.2"
   },
   "jest": {

@@ -1,45 +1,49 @@
 // src/modules/ai/ai.service.js
 const openai = require('../../config/openai');
 const redis = require('../../config/redis');
+const questionRepository = require('../../repositories/question.repository');
+const sessionRepository = require('../../repositories/quiz.session.repository');
 const {
   buildExplanationPrompt,
   buildGenerationPrompt,
   EXPLANATION_PROMPT_VERSION,
-  GENERATION_PROMPT_VERSION,
 } = require('./prompts');
 const { AppError } = require('../../utils/errors');
 const { z } = require('zod');
 
 /**
  * Stream an explanation for a wrong answer back to the client via SSE.
+ *
+ * Everything except the question id and the chosen wrong index is derived
+ * server-side from the stored question — the client never supplies the question
+ * text or the correct answer. Access is gated to questions the learner has
+ * actually answered incorrectly, so this endpoint can't be used to peek at
+ * correct answers before responding.
  */
-async function explainAnswer({
-  questionId,
-  wrongAnswerIndex,
-  questionText,
-  correctAnswer,
-  wrongAnswer,
-  concept,
-  technology,
-  res,
-  req,
-}) {
-  // 1. Build cache key
+async function explainAnswer({ questionId, wrongAnswerIndex, userId, res, req }) {
+  const question = await questionRepository.findById(questionId);
+  if (!question) throw new AppError('Question not found', 404, 'QUESTION_NOT_FOUND');
+
+  const answeredWrong = await sessionRepository.userAnsweredIncorrectly(userId, questionId);
+  if (!answeredWrong) {
+    throw new AppError('No incorrect attempt found for this question', 403, 'EXPLAIN_FORBIDDEN');
+  }
+
+  const correctAnswer = question.options[question.correct_index];
+  const wrongAnswer = question.options[wrongAnswerIndex];
+  const { concept, technology, text: questionText } = question;
+
   const cacheKey = `explain:${questionId}:${wrongAnswerIndex}:${EXPLANATION_PROMPT_VERSION}`;
 
-  // 2. Check Redis
-  const cached = await redis.get(cacheKey);
+  const cached = await redis.get(cacheKey).catch(() => null);
   if (cached) {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
+    writeSseHeaders(res);
     res.write(`data: ${JSON.stringify({ text: cached })}\n\n`);
     res.write('data: [DONE]\n\n');
     res.end();
     return;
   }
 
-  // 3. Build prompt
   const { system, user } = buildExplanationPrompt({
     questionText,
     correctAnswer,
@@ -48,12 +52,8 @@ async function explainAnswer({
     technology,
   });
 
-  // 4. Set SSE headers
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
+  writeSseHeaders(res);
 
-  // 5. Call OpenAI with stream: true
   const stream = await openai.chat.completions.create({
     model: 'llama-3.1-8b-instant',
     stream: true,
@@ -66,14 +66,10 @@ async function explainAnswer({
 
   let fullText = '';
 
-  // 6. Abort if client disconnects
   req.on('close', () => {
-    if (stream.controller) {
-      stream.controller.abort();
-    }
+    if (stream.controller) stream.controller.abort();
   });
 
-  // 7–9. Streaming loop wrapped in try/catch/finally
   try {
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || '';
@@ -82,9 +78,8 @@ async function explainAnswer({
         res.write(`data: ${JSON.stringify({ text: content })}\n\n`);
       }
     }
-    // Cache full text in Redis with 7 day TTL
-    await redis.set(cacheKey, fullText, 'EX', 60 * 60 * 24 * 7);
-  } catch (err) {
+    await redis.set(cacheKey, fullText, 'EX', 60 * 60 * 24 * 7).catch(() => {});
+  } catch {
     res.write(`data: ${JSON.stringify({ error: 'Stream interrupted' })}\n\n`);
   } finally {
     res.write('data: [DONE]\n\n');
@@ -92,8 +87,14 @@ async function explainAnswer({
   }
 }
 
+function writeSseHeaders(res) {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+}
+
 /**
- * Generate new quiz questions using OpenAI, with validation and retries.
+ * Generate a new quiz question via the model, validating and retrying output.
  */
 async function generateQuestions({ technology, concept, difficulty, existingCount }) {
   const { system, user } = buildGenerationPrompt({
@@ -115,7 +116,6 @@ async function generateQuestions({ technology, concept, difficulty, existingCoun
   let attempts = 0;
   while (attempts < 3) {
     attempts++;
-
     const response = await openai.chat.completions.create({
       model: 'mixtral-8x7b-32768',
       stream: false,
@@ -126,17 +126,14 @@ async function generateQuestions({ technology, concept, difficulty, existingCoun
     });
 
     const content = response.choices[0]?.message?.content;
-    if (!content) throw new AppError('No content from OpenAI', 500, 'OPENAI_NO_CONTENT');
+    if (!content) throw new AppError('No content from model', 500, 'AI_NO_CONTENT');
 
     try {
-      const parsed = JSON.parse(content);
-      const validated = questionSchema.parse(parsed);
-      return validated;
-    } catch (err) {
+      return questionSchema.parse(JSON.parse(content));
+    } catch {
       if (attempts >= 3) {
-        throw new AppError('Failed to generate valid question', 500, 'OPENAI_INVALID_OUTPUT');
+        throw new AppError('Failed to generate valid question', 500, 'AI_INVALID_OUTPUT');
       }
-      // retry loop continues
     }
   }
 }

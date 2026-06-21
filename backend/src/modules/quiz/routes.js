@@ -2,20 +2,28 @@
 const express = require('express');
 const router = express.Router();
 const quizController = require('./controller');
-const { startSessionSchema, submitAnswerSchema } = require('./schema');
+const { startSessionSchema, submitAnswerSchema, sessionIdParamSchema } = require('./schema');
 const validate = require('../../middleware/validate');
 const auth = require('../../middleware/auth');
 
+// POST /sessions -> start a new session
+router.post('/sessions', auth, validate(startSessionSchema), quizController.startSession);
 
-//POST /sessions -> start a new session
-router.post('/sessions',auth,validate(startSessionSchema),quizController.startSession);
+// POST /sessions/:id/answer -> submit an answer
+router.post(
+  '/sessions/:id/answer',
+  auth,
+  validate(sessionIdParamSchema, 'params'),
+  validate(submitAnswerSchema),
+  quizController.submitAnswer
+);
 
-
-//POST /sessions/:id/answer -> submite an answer
-router.post('/sessions/:id/answer', auth, validate(submitAnswerSchema), quizController.submitAnswer);
-
-
-//POST /sessions/: id/complete -> completethe se ssion
-router.post('/sessions/:id/complete', auth, quizController.completeSession);
+// POST /sessions/:id/complete -> complete the session
+router.post(
+  '/sessions/:id/complete',
+  auth,
+  validate(sessionIdParamSchema, 'params'),
+  quizController.completeSession
+);
 
 module.exports = router;

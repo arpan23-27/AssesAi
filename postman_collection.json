@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "AssesAI API",
+    "description": "Adaptive assessment platform API. Set the `baseUrl` collection variable (default http://localhost:3000/api). Run **Auth > Login** first — its test script stores the access token in the `accessToken` variable, which every authenticated request uses automatically. The refresh token is an httpOnly cookie handled by Postman's cookie jar.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "accessToken", "value": "" },
+    { "key": "sessionId", "value": "" },
+    { "key": "questionId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', data.data.accessToken);",
+                  "  pm.test('access token captured', () => pm.expect(data.data.accessToken).to.be.a('string'));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Refresh",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.data && data.data.accessToken) {",
+                  "  pm.collectionVariables.set('accessToken', data.data.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/auth/refresh", "host": ["{{baseUrl}}"], "path": ["auth", "refresh"] },
+            "description": "Rotates the refresh token (httpOnly cookie) and returns a new access token."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quiz",
+      "item": [
+        {
+          "name": "Start session",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.session) pm.collectionVariables.set('sessionId', data.session.id);",
+                  "if (data && data.firstQuestion) pm.collectionVariables.set('questionId', data.firstQuestion.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/quiz/sessions", "host": ["{{baseUrl}}"], "path": ["quiz", "sessions"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"technologyId\": 1,\n  \"difficulty\": \"basic\"\n}"
+            },
+            "description": "technologyId references the seeded technologies (1 = javascript)."
+          }
+        },
+        {
+          "name": "Submit answer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json();",
+                  "if (data && data.nextQuestion) pm.collectionVariables.set('questionId', data.nextQuestion.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quiz/sessions/{{sessionId}}/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["quiz", "sessions", "{{sessionId}}", "answer"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"answerIndex\": 0\n}"
+            },
+            "description": "Grading happens server-side. The response includes isCorrect, the next question, the updated ability score, and the current difficulty tier."
+          }
+        },
+        {
+          "name": "Complete session",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/quiz/sessions/{{sessionId}}/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["quiz", "sessions", "{{sessionId}}", "complete"]
+            },
+            "description": "No body. The score is recomputed from recorded answers on the server."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Results",
+      "item": [
+        {
+          "name": "Session result",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/results/sessions/{{sessionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["results", "sessions", "{{sessionId}}"]
+            }
+          }
+        },
+        {
+          "name": "User mastery",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/results/mastery", "host": ["{{baseUrl}}"], "path": ["results", "mastery"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI",
+      "item": [
+        {
+          "name": "Explain answer (SSE)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/ai/explain", "host": ["{{baseUrl}}"], "path": ["ai", "explain"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"wrongAnswerIndex\": 1\n}"
+            },
+            "description": "Streams a Server-Sent-Events explanation. Only works for a question the authenticated user has already answered incorrectly."
+          }
+        },
+        {
+          "name": "Generate question (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/ai/generate", "host": ["{{baseUrl}}"], "path": ["ai", "generate"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"technology\": \"javascript\",\n  \"concept\": \"closures\",\n  \"difficulty\": \"intermediate\",\n  \"existingCount\": 5\n}"
+            },
+            "description": "Requires an account with role = admin."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": { "raw": "http://localhost:3000/health", "host": ["http://localhost:3000"], "path": ["health"] }
+      }
+    }
+  ]
+}

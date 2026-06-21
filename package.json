@@ -1,0 +1,17 @@
+{
+  "name": "assesai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AssesAI — AI-powered adaptive assessment platform (monorepo tooling root)",
+  "scripts": {
+    "prepare": "husky",
+    "lint:backend": "npm --prefix backend run lint",
+    "lint:frontend": "npm --prefix frontend run lint",
+    "format:check": "prettier --check \"**/*.{js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.2"
+  }
+}

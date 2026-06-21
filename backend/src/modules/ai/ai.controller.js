@@ -1,33 +1,14 @@
 // src/modules/ai/ai.controller.js
 const aiService = require('./ai.service');
-const { AppError } = require('../../utils/errors');
 
 async function explainAnswer(req, res, next) {
   try {
-    const {
-      questionId,
-      wrongAnswerIndex,
-      questionText,
-      correctAnswer,
-      wrongAnswer,
-      concept,
-      technology,
-    } = req.body;
-
-    // Pass req and res directly for streaming
-    await aiService.explainAnswer({
-      questionId,
-      wrongAnswerIndex,
-      questionText,
-      correctAnswer,
-      wrongAnswer,
-      concept,
-      technology,
-      res,
-      req,
-    });
+    const userId = req.user.sub;
+    const { questionId, wrongAnswerIndex } = req.body;
+    // The service streams directly to res; req is passed for abort handling.
+    await aiService.explainAnswer({ questionId, wrongAnswerIndex, userId, res, req });
   } catch (err) {
-    // Only catches errors before streaming starts
+    // Only reached if the error occurs before SSE streaming starts.
     next(err);
   }
 }
@@ -47,7 +28,4 @@ async function generateQuestions(req, res, next) {
   }
 }
 
-module.exports = {
-  explainAnswer,
-  generateQuestions,
-};
+module.exports = { explainAnswer, generateQuestions };

@@ -1,18 +1,23 @@
 require('dotenv').config();
 const app = require('./app');
-const connectMongoDB = require('./config/mongodb');
-const PORT = process.env.PORT || 3000;
 const redis = require('./config/redis');
+const { pool } = require('./config/db');
 
-
+const PORT = process.env.PORT || 3000;
 
 async function start() {
+  // Fail fast if core infrastructure is unreachable.
+  await pool.query('SELECT 1');
+  console.log('PostgreSQL ready');
   await redis.ping();
   console.log('Redis ready');
-  await connectMongoDB();
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }
 
-start();
+start().catch((err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
+});

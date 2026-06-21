@@ -26,9 +26,7 @@ async function createUser({ email, password_hash }) {
   } catch (err) {
     // Translate unique constraint violation into domain error
     if (err.code === '23505') {
-      throw new DuplicateEmailError([
-        { field: 'email', issue: 'Already registered' }
-      ]);
+      throw new DuplicateEmailError([{ field: 'email', issue: 'Already registered' }]);
     }
     throw err; // rethrow other DB errors
   }
@@ -48,5 +46,5 @@ async function findById(userId) {
 module.exports = {
   findByEmail,
   createUser,
-  findById, 
+  findById,
 };
