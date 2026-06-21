@@ -6,14 +6,9 @@ An adaptive quiz platform that targets a learner's weakest concept, adjusts
 question difficulty in real time using a transparent heuristic, and streams
 AI-generated explanations for wrong answers.
 
-**Live demo:** _coming soon_ — replace this line with your deployed URL once the
-frontend is live (e.g. `https://assesai.vercel.app`).
+**Live demo:** _coming soon_ —  (e.g. `https://assesai.vercel.app`).
 
-<!--
-  Demo GIF: record a 20–30s screen capture of one full quiz run (start a quiz →
-  answer a few questions → get a streamed AI explanation → see the result) and
-  drop it in `docs/demo.gif`, then uncomment the line below.
--->
+
 <!-- ![AssesAI demo](docs/demo.gif) -->
 
 ## Run it in one command
