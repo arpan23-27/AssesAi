@@ -7,6 +7,7 @@ const {
   buildExplanationPrompt,
   buildGenerationPrompt,
   EXPLANATION_PROMPT_VERSION,
+  GENERATION_PROMPT_VERSION,
 } = require('./prompts');
 const { AppError } = require('../../utils/errors');
 const { z } = require('zod');
@@ -54,15 +55,27 @@ async function explainAnswer({ questionId, wrongAnswerIndex, userId, res, req })
 
   writeSseHeaders(res);
 
-  const stream = await openai.chat.completions.create({
-    model: 'llama-3.1-8b-instant',
-    stream: true,
-    temperature: 0.3,
-    messages: [
-      { role: 'system', content: system },
-      { role: 'user', content: user },
-    ],
-  });
+  // Headers are now sent, so any failure from here on must be reported as an SSE
+  // frame — calling next(err) would try to set a status on an already-sent
+  // response and crash. Creating the stream is the most likely place to fail
+  // (Groq unreachable, bad key, rate limit), so it gets its own guard.
+  let stream;
+  try {
+    stream = await openai.chat.completions.create({
+      model: 'llama-3.1-8b-instant',
+      stream: true,
+      temperature: 0.3,
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: user },
+      ],
+    });
+  } catch {
+    res.write(`data: ${JSON.stringify({ error: 'AI service unavailable' })}\n\n`);
+    res.write('data: [DONE]\n\n');
+    res.end();
+    return;
+  }
 
   let fullText = '';
 
@@ -94,8 +107,16 @@ function writeSseHeaders(res) {
 }
 
 /**
- * Generate a new quiz question via the model, validating and retrying output.
+ * Generate a new quiz question via the model, validate it, and persist it for
+ * review. Generated questions are written with source='ai_generated' and
+ * status='pending_review', so they never enter the live pool until an admin
+ * promotes them to 'active'.
  */
+const GENERATION_MODEL = 'llama-3.3-70b-versatile';
+
+// Tier → representative difficulty_score, matching the manual seed banding.
+const DIFFICULTY_SCORE = { basic: 0.25, intermediate: 0.55, advanced: 0.85 };
+
 async function generateQuestions({ technology, concept, difficulty, existingCount }) {
   const { system, user } = buildGenerationPrompt({
     technology,
@@ -105,7 +126,7 @@ async function generateQuestions({ technology, concept, difficulty, existingCoun
   });
 
   const questionSchema = z.object({
-    questionText: z.string(),
+    questionText: z.string().min(1),
     options: z.array(z.string()).length(4),
     correctIndex: z.number().int().min(0).max(3),
     difficulty: z.string(),
@@ -117,8 +138,10 @@ async function generateQuestions({ technology, concept, difficulty, existingCoun
   while (attempts < 3) {
     attempts++;
     const response = await openai.chat.completions.create({
-      model: 'mixtral-8x7b-32768',
+      model: GENERATION_MODEL,
       stream: false,
+      // Force a JSON object so we get parseable output instead of prose.
+      response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: system },
         { role: 'user', content: user },
@@ -128,13 +151,35 @@ async function generateQuestions({ technology, concept, difficulty, existingCoun
     const content = response.choices[0]?.message?.content;
     if (!content) throw new AppError('No content from model', 500, 'AI_NO_CONTENT');
 
+    let parsed;
     try {
-      return questionSchema.parse(JSON.parse(content));
+      parsed = questionSchema.parse(JSON.parse(content));
     } catch {
       if (attempts >= 3) {
         throw new AppError('Failed to generate valid question', 500, 'AI_INVALID_OUTPUT');
       }
+      continue;
     }
+
+    // Trust the admin-supplied technology/concept/difficulty over the model's
+    // echo of them, and persist for review.
+    const persisted = await questionRepository.insertGeneratedQuestion({
+      technology,
+      concept,
+      difficulty,
+      difficultyScore: DIFFICULTY_SCORE[difficulty] ?? 0.5,
+      text: parsed.questionText,
+      options: parsed.options,
+      correctIndex: parsed.correctIndex,
+      model: GENERATION_MODEL,
+      promptVersion: GENERATION_PROMPT_VERSION,
+    });
+
+    // A null row means the text already exists (idempotent insert).
+    if (!persisted) {
+      return { status: 'duplicate', question: { ...parsed, status: 'duplicate' } };
+    }
+    return { status: 'pending_review', question: persisted };
   }
 }
 

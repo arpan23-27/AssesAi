@@ -6,7 +6,9 @@ let isRefreshing = false
 let refreshPromise = null
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  // Driven by env so the build points at the deployed API in production and the
+  // local server in dev. VITE_API_URL must include the /api suffix.
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
   withCredentials: true, // send cookies automatically
 })
 

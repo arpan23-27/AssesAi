@@ -6,6 +6,10 @@ import { getAccessToken } from '../../store/authStore'
 import useAuthStore from '../../store/authStore'
 import ThemeToggle from '../../components/ThemeToggle'
 
+// Same env-driven base the axios client uses. The explanation endpoint is a raw
+// fetch (for SSE streaming) rather than an axios call, so it needs the URL too.
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+
 export default function Quiz() {
   const [quizState, setQuizState] = useState('idle')
   const [session, setSession] = useState(null)
@@ -108,7 +112,7 @@ export default function Quiz() {
   const streamExplanation = async (payload) => {
     setExplanation('')
     try {
-      const response = await fetch('http://localhost:3000/api/ai/explain', {
+      const response = await fetch(`${API_URL}/ai/explain`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -265,10 +269,10 @@ export default function Quiz() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '28px' }}>
               {[
-                { id: 1, name: 'JavaScript', tag: 'closures · promises · event-loop', questions: 15 },
-                { id: 2, name: 'React', tag: 'hooks · state · lifecycle', questions: 6 },
-                { id: 3, name: 'Node.js', tag: 'streams · events · modules', questions: 6 },
-                { id: 4, name: 'Python', tag: 'decorators · generators · async', questions: 6 },
+                { id: 1, name: 'JavaScript', tag: 'closures · promises · event-loop', questions: 72 },
+                { id: 2, name: 'React', tag: 'hooks · state · lifecycle', questions: 72 },
+                { id: 3, name: 'Node.js', tag: 'streams · events · modules', questions: 72 },
+                { id: 4, name: 'Python', tag: 'decorators · generators · async', questions: 72 },
               ].map(tech => (
                 <div
                   key={tech.id}

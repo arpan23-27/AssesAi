@@ -12,9 +12,17 @@ const { globalLimiter } = require('./middleware/rateLimiter');
 const cors = require('cors');
 const app = express();
 
+// Allowed browser origins are driven by env so the same image runs locally and
+// in production. CLIENT_ORIGIN is a comma-separated list (e.g. a Vercel prod
+// URL plus a preview URL); it falls back to the Vite dev server for local runs.
+const clientOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: clientOrigins,
     credentials: true,
   })
 );

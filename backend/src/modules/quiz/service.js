@@ -3,7 +3,15 @@ const questionRepository = require('../../repositories/question.repository');
 const masteryRepository = require('../../repositories/mastery.repository');
 const sessionRepository = require('../../repositories/quiz.session.repository');
 const technologyRepository = require('../../repositories/technology.repository');
-const { selectQuestion, updateAbilityScore, selectConcept, nextDifficulty } = require('./adaptive');
+const { withTransaction } = require('../../config/db');
+const {
+  selectQuestion,
+  updateAbilityScore,
+  selectConcept,
+  nextDifficulty,
+  tiersByProximity,
+  MAX_QUESTIONS,
+} = require('./adaptive');
 const { AppError } = require('../../utils/errors');
 
 const DEFAULT_ABILITY = 0.5;
@@ -13,6 +21,28 @@ function toClientQuestion(question) {
   if (!question) return null;
   const { correct_index: _omit, ...safe } = question;
   return safe;
+}
+
+/**
+ * Pick the next question for a concept, widening across difficulty tiers when
+ * the target tier is empty. Starts at `targetDifficulty` and falls back to the
+ * nearest adjacent tiers, so a promoted strong learner never dead-ends on an
+ * exhausted pool — they get the closest available question instead.
+ * @returns {Promise<Object|null>} a question row, or null only if the concept
+ *   is fully exhausted across all tiers.
+ */
+async function pickQuestion({ technology, concept, targetDifficulty, abilityScore, excludeIds }) {
+  for (const tier of tiersByProximity(targetDifficulty)) {
+    const pool = await questionRepository.findByConceptAndDifficulty({
+      technology,
+      concept,
+      difficulty: tier,
+      excludeIds,
+    });
+    const picked = selectQuestion(pool, abilityScore);
+    if (picked) return picked;
+  }
+  return null;
 }
 
 async function startSession({ userId, technologyId, difficulty }) {
@@ -35,7 +65,16 @@ async function startSession({ userId, technologyId, difficulty }) {
     difficulty,
     excludeIds: [],
   });
-  const firstQuestion = selectQuestion(questions, abilityScore);
+  // Widen across tiers if the requested starting tier happens to be empty.
+  const firstQuestion =
+    selectQuestion(questions, abilityScore) ||
+    (await pickQuestion({
+      technology: technologyName,
+      concept,
+      targetDifficulty: difficulty,
+      abilityScore,
+      excludeIds: [],
+    }));
 
   if (firstQuestion) {
     await sessionRepository.setCurrentQuestion(session.id, firstQuestion.id);
@@ -77,10 +116,9 @@ async function submitAnswer({ sessionId, userId, questionId, answerIndex }) {
 
   // Grade on the server against the stored correct_index — never trust the client.
   const isCorrect = answerIndex === question.correct_index;
-  await sessionRepository.saveAnswer(sessionId, questionId, isCorrect);
-
-  // Update concept mastery using the question's real concept.
   const concept = question.concept;
+
+  // Pre-answer mastery, read before the write transaction.
   const mastery = await masteryRepository.findByUserAndConcept({
     userId,
     technologyId: session.technology_id,
@@ -89,28 +127,47 @@ async function submitAnswer({ sessionId, userId, questionId, answerIndex }) {
   const currentScore = mastery ? Number(mastery.ability_score) : DEFAULT_ABILITY;
   const updatedAbilityScore = updateAbilityScore(currentScore, isCorrect);
 
-  await masteryRepository.upsertMastery({
-    userId,
-    technologyId: session.technology_id,
-    concept,
-    newAbilityScore: updatedAbilityScore,
-    isCorrect,
+  // The answer, the mastery update, and the next-question pointer move together
+  // atomically. The UNIQUE(session_id, question_id) constraint plus this
+  // transaction close the double-submit race: a concurrent insert fails and the
+  // whole unit rolls back instead of leaving a half-applied answer.
+  const { nextQuestion, difficulty } = await withTransaction(async (client) => {
+    await sessionRepository.saveAnswer(sessionId, questionId, isCorrect, client);
+
+    await masteryRepository.upsertMastery(
+      {
+        userId,
+        technologyId: session.technology_id,
+        concept,
+        newAbilityScore: updatedAbilityScore,
+        isCorrect,
+      },
+      client
+    );
+
+    // Read inside the transaction so they include the answer just saved.
+    const answeredIds = await sessionRepository.getAnsweredQuestionIds(sessionId, client);
+    const history = await sessionRepository.getAnswerHistory(sessionId, client);
+    const tier = nextDifficulty(session.difficulty, history);
+
+    // Fixed-length stop: once MAX_QUESTIONS is reached the session ends
+    // deterministically (null next question). Below the cap, pickQuestion widens
+    // across tiers, so a promoted strong learner is never dead-ended by an empty
+    // pool — performing well advances the quiz instead of ending it.
+    let picked = null;
+    if (answeredIds.length < MAX_QUESTIONS) {
+      picked = await pickQuestion({
+        technology: technologyName,
+        concept,
+        targetDifficulty: tier,
+        abilityScore: updatedAbilityScore,
+        excludeIds: answeredIds,
+      });
+    }
+
+    await sessionRepository.setCurrentQuestion(sessionId, picked ? picked.id : null, client);
+    return { nextQuestion: picked, difficulty: tier };
   });
-
-  // Heuristic difficulty tiering from the full answer history of this session.
-  const answeredIds = await sessionRepository.getAnsweredQuestionIds(sessionId);
-  const history = await sessionRepository.getAnswerHistory(sessionId);
-  const difficulty = nextDifficulty(session.difficulty, history);
-
-  const nextQuestions = await questionRepository.findByConceptAndDifficulty({
-    technology: technologyName,
-    concept,
-    difficulty,
-    excludeIds: answeredIds,
-  });
-  const nextQuestion = selectQuestion(nextQuestions, updatedAbilityScore);
-
-  await sessionRepository.setCurrentQuestion(sessionId, nextQuestion ? nextQuestion.id : null);
 
   return {
     isCorrect,

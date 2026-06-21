@@ -8,7 +8,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "migrate": "node src/migrate.js",
-    "seed": "node src/seeds/technologies.seed.js && node src/seeds/questions.seed.js",
+    "seed": "node src/seeds/technologies.seed.js && node src/seeds/questions.seed.js && node src/seeds/admin.seed.js",
     "lint": "eslint \"src/**/*.js\"",
     "format": "prettier --write \"src/**/*.{js,json}\"",
     "format:check": "prettier --check \"src/**/*.{js,json}\""

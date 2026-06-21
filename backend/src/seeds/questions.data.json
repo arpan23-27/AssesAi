@@ -3,13 +3,68 @@
     "technology": "javascript",
     "concept": "closures",
     "difficulty": "basic",
-    "difficulty_score": 0.2,
-    "text": "What is a closure in JavaScript?",
+    "difficulty_score": 0.15,
+    "text": "What does a closure give a function access to?",
     "options": [
-      "A function bundled with its lexical environment",
-      "A block of code that runs immediately",
-      "A way to declare constants",
-      "A method to close a browser tab"
+      "The variables in its own scope plus those of enclosing scopes and globals",
+      "Only its own local variables",
+      "Only global variables",
+      "Only its arguments"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "When is a closure created in JavaScript?",
+    "options": [
+      "Whenever a function is defined inside another scope and keeps using its variables",
+      "Only when the class keyword is used",
+      "Only inside loops",
+      "Only when a function runs twice"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "A function that 'remembers' variables from where it was defined is called a:",
+    "options": ["Closure", "Callback", "Promise", "Generator"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "Closures rely on which kind of scoping in JavaScript?",
+    "options": [
+      "Lexical (static) scoping",
+      "Dynamic scoping",
+      "Block-only scoping",
+      "No scoping at all"
     ],
     "correct_index": 0,
     "source": "manual",
@@ -24,14 +79,29 @@
     "concept": "closures",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "Why are closures commonly used in JavaScript?",
+    "text": "A common practical use of closures is:",
     "options": [
-      "To share variables between unrelated functions",
-      "To preserve access to outer scope variables after the outer function returns",
-      "To prevent garbage collection of all variables",
-      "To make functions run faster"
+      "Keeping data private and persisting state between calls",
+      "Speeding up the event loop",
+      "Declaring global variables",
+      "Disabling garbage collection"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "In function outer(){ let x = 1; return function(){ return x; }; }, the inner function closes over:",
+    "options": ["x", "the global object", "nothing", "the return keyword"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -44,14 +114,59 @@
     "concept": "closures",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "Which of the following demonstrates a closure?",
+    "text": "After the outer function returns, a variable captured by a closure is:",
     "options": [
-      "const x = 5",
-      "function outer() { let x = 1; return function() { return x; } }",
-      "class Foo { constructor() {} }",
-      "setTimeout(() => {}, 0)"
+      "Still accessible to the inner function",
+      "Immediately deleted",
+      "Reset to undefined",
+      "Promoted to a global"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "Which variables can a closure capture from an enclosing function?",
+    "options": ["Those declared with let, const, or var", "Only var", "Only const", "None of them"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "What does for (var i = 0; i < 3; i++) { setTimeout(() => console.log(i)); } log?",
+    "options": ["3 3 3", "0 1 2", "0 0 0", "1 2 3"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "Switching to for (let i = 0; i < 3; i++) { setTimeout(() => console.log(i)); } logs:",
+    "options": ["0 1 2", "3 3 3", "undefined three times", "a ReferenceError"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -64,9 +179,9 @@
     "concept": "closures",
     "difficulty": "intermediate",
     "difficulty_score": 0.5,
-    "text": "What does the following code output? for(var i=0; i<3; i++) { setTimeout(() => console.log(i), 0) }",
-    "options": ["0 1 2", "3 3 3", "0 0 0", "undefined undefined undefined"],
-    "correct_index": 1,
+    "text": "function makeCounter(){ let c = 0; return () => ++c; } const f = makeCounter(); f(); f(); The next f() returns:",
+    "options": ["3", "1", "0", "undefined"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -78,13 +193,243 @@
     "technology": "javascript",
     "concept": "closures",
     "difficulty": "intermediate",
-    "difficulty_score": 0.55,
-    "text": "How do you fix a closure-in-loop bug using let?",
+    "difficulty_score": 0.53,
+    "text": "Calling a counter factory twice produces counters that:",
     "options": [
-      "Replace var with let so each iteration gets its own scope",
-      "Use const instead of var",
-      "Wrap the loop in a try-catch",
-      "Add \"use strict\" at the top"
+      "Each keep independent state",
+      "Share one state",
+      "Throw an error",
+      "Always return 0"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Which pattern uses a closure to emulate private variables?",
+    "options": [
+      "An IIFE/module that returns an object exposing only some functions",
+      "Using a private keyword",
+      "Declaring vars at top level",
+      "Calling JSON.stringify"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "const fns = []; for (let i = 0; i < 3; i++) fns.push(() => i); fns[1]() returns:",
+    "options": ["1", "3", "0", "2"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Why can closures contribute to memory leaks?",
+    "options": [
+      "They keep referenced variables alive, preventing garbage collection",
+      "They duplicate the global object",
+      "They turn off the collector",
+      "They run on another thread"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "In function once(fn){ let called=false; return (...a)=>{ if(!called){ called=true; return fn(...a);} }; }, the captured called is:",
+    "options": [
+      "Private to each returned function from a single once() call",
+      "Shared globally",
+      "Reset on every call",
+      "Always true"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "Using var, how do you capture each loop value in a setTimeout without let?",
+    "options": [
+      "Wrap the body in an IIFE that takes i as a parameter",
+      "Use const inside the callback",
+      "Call the callback synchronously",
+      "Use a global variable"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "Variables captured by a closure are held by:",
+    "options": [
+      "Reference to the variable binding, not a snapshot of its value",
+      "A value copy taken at creation",
+      "A deep clone",
+      "A WeakRef only"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "const add = a => b => a + b; const add5 = add(5); add5(3) evaluates to:",
+    "options": ["8", "5", "3", "53"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "function memoize(fn){ const cache={}; return n => cache[n] ?? (cache[n]=fn(n)); } The closure preserves:",
+    "options": [
+      "The cache object across calls",
+      "Nothing across calls",
+      "Only the last argument",
+      "The function name"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Which statement about closures and this is correct?",
+    "options": [
+      "Closures do not capture this; arrow functions inherit this lexically instead",
+      "Closures always capture this",
+      "this is the only thing closures capture",
+      "Closures rebind this to the global object"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "function trap(){ const big = new Array(1e6); return () => big[0]; } Returning the inner function:",
+    "options": [
+      "Keeps the large array reachable through the closure",
+      "Frees the array immediately",
+      "Copies only big[0]",
+      "Throws a RangeError"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "How do you give an object truly private methods using closures?",
+    "options": [
+      "Define them inside a factory and expose only chosen members on the returned object",
+      "Prefix names with an underscore",
+      "Call Object.freeze",
+      "Declare them with var"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "closures",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Each invocation of an outer function creates:",
+    "options": [
+      "A new closure environment with its own captured bindings",
+      "One scope shared by all invocations",
+      "A copy of only the global scope",
+      "No new scope"
     ],
     "correct_index": 0,
     "source": "manual",
@@ -98,15 +443,65 @@
     "technology": "javascript",
     "concept": "promises",
     "difficulty": "basic",
-    "difficulty_score": 0.2,
-    "text": "What does a JavaScript Promise represent?",
+    "difficulty_score": 0.15,
+    "text": "What does a Promise represent?",
     "options": [
-      "A synchronous function call",
-      "An eventual completion or failure of an async operation",
+      "The eventual result of an asynchronous operation",
+      "A synchronous return value",
       "A type of loop",
-      "A class constructor pattern"
+      "A CSS animation"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "What are the three states of a Promise?",
+    "options": [
+      "pending, fulfilled, rejected",
+      "open, closed, error",
+      "start, run, stop",
+      "new, used, done"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "Which method handles a fulfilled Promise's value?",
+    "options": [".then()", ".catch()", ".finally()", ".throw()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "Which method handles a rejected Promise?",
+    "options": [".catch()", ".then()", ".resolve()", ".await()"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -119,9 +514,29 @@
     "concept": "promises",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "Which Promise method runs regardless of whether the promise resolved or rejected?",
-    "options": [".then()", ".catch()", ".finally()", ".resolve()"],
-    "correct_index": 2,
+    "text": "What does Promise.resolve(42) return?",
+    "options": [
+      "A Promise already fulfilled with 42",
+      "The number 42 directly",
+      "A rejected Promise",
+      "undefined"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "The keyword used to pause an async function until a Promise settles is:",
+    "options": ["await", "yield", "defer", "hold"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -134,14 +549,69 @@
     "concept": "promises",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "What is the difference between Promise.all and Promise.race?",
+    "text": "An async function always returns:",
+    "options": ["A Promise", "undefined", "the awaited value synchronously", "a callback"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": ".finally() on a Promise runs:",
     "options": [
-      "No difference",
-      "Promise.all waits for all; Promise.race resolves with the first settled",
-      "Promise.race waits for all; Promise.all resolves with the first",
-      "Promise.all only handles rejections"
+      "Whether the Promise fulfills or rejects",
+      "Only on fulfillment",
+      "Only on rejection",
+      "Never"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "Promise.all([p1, p2]) rejects when:",
+    "options": [
+      "Any one of its promises rejects",
+      "All of its promises reject",
+      "The first one fulfills",
+      "Never"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "Promise.race([p1, p2]) settles with:",
+    "options": [
+      "The first promise to settle (fulfill or reject)",
+      "The last promise to settle",
+      "All results in an array",
+      "Only fulfilled results"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -154,14 +624,14 @@
     "concept": "promises",
     "difficulty": "intermediate",
     "difficulty_score": 0.5,
-    "text": "What happens if you throw inside a .then() handler?",
+    "text": "What does Promise.allSettled return?",
     "options": [
-      "The error is silently ignored",
-      "The program crashes",
-      "The returned promise rejects with that error",
-      "The error propagates synchronously"
+      "A promise that fulfills with an array describing each outcome",
+      "A promise that rejects on first failure",
+      "The first fulfilled value",
+      "undefined"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -173,15 +643,280 @@
     "technology": "javascript",
     "concept": "promises",
     "difficulty": "intermediate",
-    "difficulty_score": 0.6,
-    "text": "What does Promise.allSettled return compared to Promise.all?",
+    "difficulty_score": 0.53,
+    "text": "Inside an async function, try/catch can catch errors from:",
     "options": [
-      "They are identical",
-      "allSettled resolves with all outcomes including rejections; all rejects on first failure",
-      "allSettled only returns rejected promises",
-      "all returns all outcomes; allSettled fails fast"
+      "awaited promises that reject",
+      "only synchronous throws",
+      "only network errors",
+      "nothing"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "What is the result of await Promise.reject(new Error('x')) without a try/catch?",
+    "options": [
+      "It throws, rejecting the surrounding async function",
+      "It returns the Error object",
+      "It returns undefined",
+      "It is ignored"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "Returning a promise inside a .then() callback causes the chain to:",
+    "options": [
+      "Wait for that promise before continuing",
+      "Ignore the returned promise",
+      "Reject immediately",
+      "Run the next then synchronously"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Promise.any([p1, p2]) fulfills with:",
+    "options": [
+      "The first fulfilled value, rejecting only if all reject",
+      "The first rejection",
+      "All values",
+      "the last value"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Which best avoids 'callback hell'?",
+    "options": [
+      "Chaining .then() or using async/await",
+      "Nesting more callbacks",
+      "Using setTimeout",
+      "Using only synchronous code"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "const r = [1,2,3].map(async x => x*2); What is r?",
+    "options": [
+      "An array of pending promises",
+      "An array [2,4,6]",
+      "A single promise of [2,4,6]",
+      "undefined"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "To run async work over an array sequentially you should:",
+    "options": [
+      "await inside a for...of loop",
+      "use array.map with await",
+      "use Promise.all",
+      "use forEach with await"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "A rejected promise with no rejection handler triggers:",
+    "options": [
+      "An unhandledrejection event",
+      "A syntax error",
+      "A silent success",
+      "An immediate process exit by spec"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "await blocks only:",
+    "options": [
+      "The current async function, not the whole thread",
+      "The entire event loop",
+      "all timers",
+      "the microtask queue permanently"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Promise callbacks (.then) are scheduled on the:",
+    "options": ["Microtask queue", "Macrotask queue", "Call stack directly", "Render queue"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "Promise.all preserves results in:",
+    "options": [
+      "Input order, regardless of which settles first",
+      "Completion order",
+      "Reverse order",
+      "Random order"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "Wrapping a callback API in a promise is called:",
+    "options": ["Promisification", "Currying", "Memoization", "Debouncing"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "promises",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "new Promise(executor) runs its executor function:",
+    "options": [
+      "Synchronously, at construction time",
+      "On the next microtask",
+      "After a 0ms timeout",
+      "Only when .then is attached"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "JavaScript executes user code on:",
+    "options": ["A single main thread", "Multiple threads by default", "The GPU", "No thread"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "The event loop's job is to:",
+    "options": [
+      "Move queued callbacks onto the call stack when it is empty",
+      "Compile the code",
+      "Allocate memory",
+      "Render CSS"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -194,14 +929,34 @@
     "concept": "event-loop",
     "difficulty": "basic",
     "difficulty_score": 0.2,
-    "text": "What is the JavaScript event loop responsible for?",
+    "text": "setTimeout(fn, 0) schedules fn to run:",
     "options": [
-      "Compiling JavaScript code",
-      "Managing memory allocation",
-      "Moving tasks from the queue to the call stack when it is empty",
-      "Handling CSS animations"
+      "After the current synchronous code finishes",
+      "Immediately, before other code",
+      "Never",
+      "On a separate thread"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "The call stack holds:",
+    "options": [
+      "The functions currently executing",
+      "Pending timers",
+      "Network responses",
+      "DOM nodes"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -214,9 +969,34 @@
     "concept": "event-loop",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "Which queue do setTimeout callbacks go into?",
-    "options": ["Microtask queue", "Macrotask queue", "Call stack", "Render queue"],
-    "correct_index": 1,
+    "text": "Long synchronous work on the main thread will:",
+    "options": [
+      "Block rendering and other callbacks",
+      "Run in parallel automatically",
+      "Be moved to a worker",
+      "Be skipped"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "Which queue do setTimeout callbacks go to?",
+    "options": [
+      "The macrotask (task) queue",
+      "The microtask queue",
+      "The call stack",
+      "The render queue"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -229,14 +1009,64 @@
     "concept": "event-loop",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "Which executes first: Promise.then or setTimeout?",
+    "text": "Which queue do Promise .then callbacks go to?",
+    "options": ["The microtask queue", "The macrotask queue", "The call stack", "The timer queue"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "Web APIs like setTimeout and fetch are provided by:",
     "options": [
-      "setTimeout",
-      "Promise.then (microtask queue runs before macrotask)",
-      "They execute in the order written",
-      "Depends on the browser"
+      "The host environment (browser/Node), not the JS engine itself",
+      "The V8 engine core",
+      "The microtask queue",
+      "The call stack"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "console.log(1); setTimeout(()=>console.log(2)); Promise.resolve().then(()=>console.log(3)); console.log(4); prints:",
+    "options": ["1 4 3 2", "1 2 3 4", "1 4 2 3", "1 3 4 2"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "Microtasks are drained:",
+    "options": [
+      "Completely before the next macrotask runs",
+      "After all macrotasks",
+      "Only once per second",
+      "Never automatically"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -249,9 +1079,14 @@
     "concept": "event-loop",
     "difficulty": "intermediate",
     "difficulty_score": 0.5,
-    "text": "What is the output order? console.log(1); setTimeout(()=>console.log(2),0); Promise.resolve().then(()=>console.log(3)); console.log(4)",
-    "options": ["1 2 3 4", "1 4 2 3", "1 4 3 2", "1 3 4 2"],
-    "correct_index": 2,
+    "text": "A promise chain that keeps queuing microtasks can:",
+    "options": [
+      "Starve macrotasks/rendering until it finishes",
+      "Speed up timers",
+      "Run on another thread",
+      "Be ignored by the loop"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -263,15 +1098,285 @@
     "technology": "javascript",
     "concept": "event-loop",
     "difficulty": "intermediate",
-    "difficulty_score": 0.6,
-    "text": "Why does a long-running synchronous task block the UI in a browser?",
+    "difficulty_score": 0.53,
+    "text": "queueMicrotask(fn) schedules fn:",
     "options": [
-      "Because it uses too much memory",
-      "Because JavaScript is single-threaded and blocks the event loop from processing other tasks",
-      "Because CSS cannot update during JS execution",
-      "Because the garbage collector pauses everything"
+      "On the microtask queue, before the next macrotask",
+      "On the macrotask queue",
+      "Synchronously now",
+      "After 4ms"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "In browsers, setTimeout's minimum delay for nested timers is clamped to roughly:",
+    "options": ["4ms", "0ms always", "100ms", "1s"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "await effectively schedules the continuation as:",
+    "options": [
+      "A microtask after the awaited value settles",
+      "A macrotask",
+      "Synchronous code",
+      "An animation frame"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "requestAnimationFrame callbacks run:",
+    "options": [
+      "Before the next repaint",
+      "After all timers for the session",
+      "On the microtask queue",
+      "Only once ever"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Two setTimeout(fn, 0) calls execute their callbacks:",
+    "options": [
+      "In the order they were scheduled, one task each",
+      "Simultaneously",
+      "In reverse order",
+      "As microtasks"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "In Node.js, process.nextTick callbacks run:",
+    "options": [
+      "Before other microtasks (Promise jobs) in the same phase",
+      "After all timers",
+      "On the macrotask queue",
+      "Only on exit"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "The Node.js event loop is organized into:",
+    "options": [
+      "Phases such as timers, poll, check, and close callbacks",
+      "A single FIFO queue only",
+      "Two threads",
+      "No structure"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "setImmediate(fn) vs setTimeout(fn,0) inside an I/O callback in Node:",
+    "options": [
+      "setImmediate generally runs first (check phase before next timers)",
+      "setTimeout always runs first",
+      "They never differ",
+      "Both are microtasks"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "Recursively scheduling process.nextTick can:",
+    "options": [
+      "Starve the event loop, blocking I/O",
+      "Speed up I/O",
+      "Run on a worker thread",
+      "Be merged by Node"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Microtasks scheduled inside a microtask are processed:",
+    "options": [
+      "In the same drain, before returning to macrotasks",
+      "On the next macrotask",
+      "After 4ms",
+      "Never"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "Which correctly orders these by priority after sync code in the browser?",
+    "options": [
+      "Microtasks, then a macrotask, then rendering",
+      "Rendering, then microtasks, then macrotasks",
+      "Macrotasks, then microtasks",
+      "They are unordered"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "CPU-bound work that must not block the UI thread should run in:",
+    "options": [
+      "A Web Worker (or worker_threads in Node)",
+      "A setTimeout(0)",
+      "A microtask",
+      "requestAnimationFrame"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "javascript",
+    "concept": "event-loop",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "An async function that only awaits already-resolved promises still:",
+    "options": [
+      "Yields to the microtask queue at each await",
+      "Runs fully synchronously",
+      "Blocks all timers",
+      "Spawns a thread"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "What does the useState hook return?",
+    "options": [
+      "An array with the current value and a setter function",
+      "Just the current value",
+      "A single setter function",
+      "A promise"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Which hook lets you run side effects in a function component?",
+    "options": ["useEffect", "useState", "useMemo", "useRef"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -284,14 +1389,29 @@
     "concept": "hooks",
     "difficulty": "basic",
     "difficulty_score": 0.2,
-    "text": "What does useState return?",
+    "text": "React Hooks can be called:",
     "options": [
-      "A single state value",
-      "An array with a state value and a setter function",
-      "A ref object",
-      "A memoized value"
+      "Only at the top level of a component or another hook",
+      "Inside loops and conditions freely",
+      "Only inside class methods",
+      "Anywhere, including event handlers conditionally"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "Custom hook names should start with:",
+    "options": ["use", "with", "hook", "on"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -304,14 +1424,84 @@
     "concept": "hooks",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "When does useEffect run by default?",
+    "text": "Hooks were introduced so that:",
     "options": [
-      "Only on mount",
-      "Only on unmount",
+      "Function components could use state and lifecycle features",
+      "Classes would render faster",
+      "JSX could be removed",
+      "Props would be optional"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "useState(0) initializes the state to:",
+    "options": ["0", "null", "undefined", "an empty array"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.3,
+    "text": "To read the previous value when updating state you should pass the setter:",
+    "options": [
+      "A function of the previous state",
+      "The new value directly only",
+      "A promise",
+      "the JSX element"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "Which hook returns a mutable ref object that persists across renders?",
+    "options": ["useRef", "useState", "useEffect", "useReducer"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "An empty dependency array [] in useEffect means the effect runs:",
+    "options": [
+      "Once after the first render (and cleanup on unmount)",
       "After every render",
-      "Only when state changes"
+      "Never",
+      "Only on unmount"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -322,16 +1512,326 @@
   {
     "technology": "react",
     "concept": "hooks",
-    "difficulty": "basic",
-    "difficulty_score": 0.3,
-    "text": "What is the purpose of the dependency array in useEffect?",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "Omitting the dependency array entirely in useEffect causes it to run:",
+    "options": ["After every render", "Only once", "Never", "Only on mount"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "The function returned from a useEffect callback is used to:",
     "options": [
-      "To list props the component receives",
-      "To control when the effect re-runs",
-      "To declare state variables",
-      "To memoize the component"
+      "Clean up the effect (e.g., remove listeners) before re-run/unmount",
+      "Return JSX",
+      "Set state synchronously",
+      "Memoize a value"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "useMemo is primarily used to:",
+    "options": [
+      "Cache an expensive computed value between renders",
+      "Run side effects",
+      "Replace useState",
+      "Force a re-render"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "useCallback returns:",
+    "options": [
+      "A memoized version of a callback that changes only when deps change",
+      "A memoized value",
+      "A ref",
+      "A new component"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "Calling a state setter with the same value as the current state:",
+    "options": [
+      "May let React bail out of re-rendering",
+      "Always forces a re-render",
+      "Throws an error",
+      "Clears all state"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Two useState calls in one component:",
+    "options": [
+      "Maintain independent, ordered state slots",
+      "Share one state value",
+      "Are not allowed",
+      "Must be combined into one"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "useReducer is a good choice when:",
+    "options": [
+      "State logic is complex or the next state depends on the previous",
+      "You only toggle a boolean",
+      "You never update state",
+      "You need a ref"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "Why must hooks not be called conditionally?",
+    "options": [
+      "React relies on a stable call order to associate state across renders",
+      "It would slow rendering",
+      "Conditions are not supported in JS",
+      "Hooks need a class"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "A stale closure bug in useEffect usually comes from:",
+    "options": [
+      "Omitting a changing value from the dependency array",
+      "Listing too many dependencies",
+      "Returning JSX from the effect",
+      "Using useRef"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "useLayoutEffect differs from useEffect in that it runs:",
+    "options": [
+      "Synchronously after DOM mutations, before the browser paints",
+      "After paint, asynchronously",
+      "Only on the server",
+      "Never on the client"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "To keep a value across renders without triggering re-renders, use:",
+    "options": ["useRef", "useState", "useMemo", "useEffect"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Passing a new inline object as a memoized child's prop each render:",
+    "options": [
+      "Breaks memoization because the reference changes",
+      "Has no effect on memoization",
+      "Throws a warning",
+      "Freezes the component"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "A custom hook shares logic between components but:",
+    "options": [
+      "Each component gets its own isolated state from it",
+      "All components share one state",
+      "It must return JSX",
+      "It can only be used once per app"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "React 18 may call a component's render and certain effects twice in development because of:",
+    "options": [
+      "Strict Mode double-invocation to surface side-effect bugs",
+      "A memory leak",
+      "Concurrent rendering errors",
+      "A deprecated API"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "hooks",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "The functional updater form setX(prev => prev + 1) is preferred when:",
+    "options": [
+      "Multiple updates may batch and you need the latest value",
+      "You never read previous state",
+      "The value is a constant",
+      "You want to skip a render"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "In React, state is:",
+    "options": [
+      "Data managed within a component that can change over time",
+      "Always passed from the parent and read-only",
+      "Stored only in the DOM",
+      "A CSS property"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Updating state in React should be done by:",
+    "options": [
+      "Calling the state setter, never mutating state directly",
+      "Reassigning the variable directly",
+      "Editing the DOM",
+      "Using a global variable"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -344,14 +1844,69 @@
     "concept": "state",
     "difficulty": "basic",
     "difficulty_score": 0.2,
-    "text": "What triggers a re-render in React?",
+    "text": "When state changes, React typically:",
     "options": [
-      "Directly mutating state",
-      "Calling setState or a state setter",
-      "Changing a variable inside the component",
-      "Importing a new module"
+      "Re-renders the component",
+      "Reloads the whole page",
+      "Does nothing",
+      "Mutates the original object in place"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "Props differ from state because props are:",
+    "options": [
+      "Passed in from a parent and read-only to the component",
+      "Always mutable internally",
+      "Stored in localStorage",
+      "Only numbers"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.25,
+    "text": "Initial state for a counter starting at 0 is set with:",
+    "options": ["useState(0)", "useEffect(0)", "useRef()", "setState()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "Lifting state up means:",
+    "options": [
+      "Moving shared state to the closest common ancestor",
+      "Storing it on window",
+      "Deleting child state",
+      "Using more refs"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -364,14 +1919,414 @@
     "concept": "state",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "Why should you never mutate state directly in React?",
+    "text": "Derived data that can be computed from existing state:",
     "options": [
-      "It causes a syntax error",
-      "React will not detect the change and re-render",
-      "It deletes the component",
-      "It resets all props"
+      "Usually should not be stored as separate state",
+      "Must always be its own state",
+      "Should be stored in the DOM",
+      "Cannot be computed"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "A controlled input gets its value from:",
+    "options": ["React state", "The DOM only", "A ref always", "localStorage"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "Why is mutating state objects directly a problem?",
+    "options": [
+      "React compares references and may skip the re-render",
+      "It is slower to type",
+      "It changes the props",
+      "It throws a syntax error"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "To update one field of an object in state you should:",
+    "options": [
+      "Create a new object with the spread operator and changed field",
+      "Mutate the field and call setState()",
+      "Edit it in the DOM",
+      "Use a ref"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "React state updates inside event handlers are usually:",
+    "options": [
+      "Batched, so multiple setStates cause one re-render",
+      "Applied instantly and synchronously read",
+      "Ignored",
+      "Run on a worker thread"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "After calling setCount(count + 1) twice in one handler with the value form:",
+    "options": [
+      "Count likely increases by 1 due to stale closure over count",
+      "Count always increases by 2",
+      "An error is thrown",
+      "Count resets to 0"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Reading state immediately after calling its setter returns:",
+    "options": [
+      "The old value, because the update is asynchronous within the render",
+      "The new value synchronously",
+      "undefined",
+      "a promise"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "To toggle a boolean in state correctly you can write:",
+    "options": [
+      "setOpen(prev => !prev)",
+      "setOpen(!open) only inside a loop",
+      "open = !open",
+      "useRef(!open)"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Passing state down to children is done via:",
+    "options": ["Props", "Global variables", "Refs only", "The DOM"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Storing the same piece of truth in two states leads to:",
+    "options": [
+      "Synchronization bugs; prefer a single source of truth",
+      "Faster rendering",
+      "Automatic syncing by React",
+      "A compile error"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "Passing a function to useState as useState(() => expensiveInit()) does what?",
+    "options": [
+      "Computes the initial state lazily, only on the first render",
+      "Runs expensiveInit on every render",
+      "Sets state to the function itself",
+      "Throws an error"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "To avoid prop drilling for deeply shared state you can use:",
+    "options": [
+      "React Context (or a state library)",
+      "More props at every level",
+      "Refs",
+      "Global window variables"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "Why can calling setState in a loop with the value form lose updates?",
+    "options": [
+      "Each call closes over the same stale state; use the updater function instead",
+      "React caps updates at one",
+      "Loops are not allowed",
+      "State is read-only"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "React's reconciliation decides what changed by:",
+    "options": [
+      "Diffing the new element tree against the previous one",
+      "Re-running the whole app",
+      "Reading the DOM directly",
+      "Comparing CSS"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "A missing or unstable key on list items can cause:",
+    "options": [
+      "Incorrect state being preserved on the wrong item",
+      "Faster rendering",
+      "A network error",
+      "Automatic memoization"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "useReducer's dispatch identity across renders is:",
+    "options": [
+      "Stable, so it is safe to omit from effect dependencies",
+      "New on every render",
+      "Always undefined",
+      "A promise"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "Putting non-serializable values (like DOM nodes) in state is discouraged because:",
+    "options": [
+      "They do not fit React's value-based model and can cause subtle bugs",
+      "They render faster",
+      "React converts them to strings",
+      "It is required"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "state",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Concurrent features (useTransition) let you mark updates as:",
+    "options": [
+      "Non-urgent, so React can keep the UI responsive",
+      "Synchronous and blocking",
+      "Server-only",
+      "Disabled"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "The three broad phases of a React component's life are:",
+    "options": [
+      "Mounting, updating, and unmounting",
+      "Loading, parsing, painting",
+      "Open, close, reset",
+      "Build, test, deploy"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Mounting refers to:",
+    "options": [
+      "Inserting the component into the DOM for the first time",
+      "Removing it from the DOM",
+      "Updating its props",
+      "Pausing it"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "In function components, lifecycle behavior is expressed with:",
+    "options": ["The useEffect hook", "The render method only", "componentDidMount only", "CSS"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "Unmounting is when a component is:",
+    "options": ["Removed from the DOM", "First added to the DOM", "Re-rendered", "Given new props"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -384,29 +2339,14 @@
     "concept": "lifecycle",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "Which hook replaces componentDidMount in functional components?",
-    "options": ["useState", "useCallback", "useEffect with empty dependency array", "useRef"],
-    "correct_index": 2,
-    "source": "manual",
-    "status": "active",
-    "metadata": {
-      "prompt_version": "v1",
-      "model": "manual"
-    }
-  },
-  {
-    "technology": "nodejs",
-    "concept": "events",
-    "difficulty": "basic",
-    "difficulty_score": 0.2,
-    "text": "What is the EventEmitter in Node.js?",
+    "text": "componentDidMount in a class runs:",
     "options": [
-      "A built-in HTTP server",
-      "A class that allows objects to emit and listen for named events",
-      "A file system watcher",
-      "A stream transformer"
+      "Once, right after the component is first added to the DOM",
+      "Before the first render",
+      "On every render",
+      "Only on unmount"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -415,18 +2355,18 @@
     }
   },
   {
-    "technology": "nodejs",
-    "concept": "events",
+    "technology": "react",
+    "concept": "lifecycle",
     "difficulty": "basic",
-    "difficulty_score": 0.25,
-    "text": "What does process.nextTick() do?",
+    "difficulty_score": 0.28,
+    "text": "A re-render (update) happens when:",
     "options": [
-      "Delays execution by 1 tick of the clock",
-      "Schedules a callback to run before the next event loop iteration",
-      "Runs code after all I/O events",
-      "Exits the current process"
+      "State or props change",
+      "The page is scrolled",
+      "Every second automatically",
+      "Only on reload"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -435,38 +2375,418 @@
     }
   },
   {
-    "technology": "nodejs",
-    "concept": "modules",
-    "difficulty": "basic",
-    "difficulty_score": 0.2,
-    "text": "What is the difference between require() and import in Node.js?",
-    "options": [
-      "No difference",
-      "require is CommonJS (synchronous), import is ES Module (static)",
-      "import is older than require",
-      "require only works in browsers"
-    ],
-    "correct_index": 1,
-    "source": "manual",
-    "status": "active",
-    "metadata": {
-      "prompt_version": "v1",
-      "model": "manual"
-    }
-  },
-  {
-    "technology": "nodejs",
-    "concept": "modules",
+    "technology": "react",
+    "concept": "lifecycle",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "What does module.exports do?",
+    "text": "Cleanup logic in a function component goes in:",
     "options": [
-      "Imports another module",
-      "Defines what a module exposes when required by another file",
-      "Creates a new module",
-      "Runs the module in isolation"
+      "The function returned by useEffect",
+      "A separate render method",
+      "The component's return JSX",
+      "A ref"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "The class method render() must:",
+    "options": [
+      "Return JSX (or null) and be free of side effects",
+      "Perform network requests",
+      "Update state directly",
+      "Mutate the DOM"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "useEffect(fn, []) is the function-component equivalent of:",
+    "options": [
+      "componentDidMount (with cleanup as componentWillUnmount)",
+      "componentDidUpdate",
+      "render",
+      "getDerivedStateFromProps"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "useEffect with a dependency [count] mirrors:",
+    "options": [
+      "componentDidUpdate filtered to when count changes",
+      "componentWillMount",
+      "render",
+      "shouldComponentUpdate"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "Subscriptions set up in an effect should be removed in:",
+    "options": [
+      "The effect's cleanup function",
+      "componentWillMount",
+      "the render body",
+      "a ref callback"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "Setting state directly inside the render body causes:",
+    "options": ["An infinite render loop", "A single safe update", "Nothing", "A network call"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "The cleanup function of an effect runs:",
+    "options": [
+      "Before the effect re-runs and on unmount",
+      "Only on mount",
+      "Only once at app start",
+      "After every paint regardless"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "getDerivedStateFromProps is a:",
+    "options": [
+      "Static method invoked before render to derive state from props",
+      "Hook",
+      "Cleanup callback",
+      "Event handler"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "If an effect depends on a prop but you omit it from deps, you risk:",
+    "options": [
+      "Using a stale value of that prop",
+      "Too many re-renders only",
+      "A compile error",
+      "Faster rendering"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Multiple useEffect calls in one component:",
+    "options": [
+      "Run in the order they are declared",
+      "Run in reverse order",
+      "Are merged into one",
+      "Are not allowed"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "Error boundaries catch render-phase errors using:",
+    "options": [
+      "componentDidCatch / getDerivedStateFromError in a class component",
+      "useEffect",
+      "try/catch in JSX",
+      "a global window handler only"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "shouldComponentUpdate / React.memo exist to:",
+    "options": [
+      "Skip re-renders when props/state are unchanged for performance",
+      "Force extra renders",
+      "Replace useEffect",
+      "Handle errors"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "In React 18 Strict Mode, mount effects may run twice in dev to:",
+    "options": [
+      "Help detect missing cleanup and unsafe side effects",
+      "Improve production speed",
+      "Double network throughput",
+      "Disable effects"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "Reading layout (e.g., element size) and synchronously re-rendering is best done in:",
+    "options": ["useLayoutEffect", "useEffect", "the render body", "a ref's constructor"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "An effect that updates state which is also in its own deps can cause:",
+    "options": [
+      "An infinite update loop if not guarded",
+      "A guaranteed single run",
+      "No re-render",
+      "A syntax error"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "getSnapshotBeforeUpdate lets a class component:",
+    "options": [
+      "Capture DOM info (like scroll position) before the DOM is updated",
+      "Fetch data after mount",
+      "Replace render",
+      "Define hooks"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "useEffect callbacks themselves cannot be async because:",
+    "options": [
+      "An async function returns a promise, but effects must return a cleanup function or nothing",
+      "React forbids promises",
+      "await is not allowed in React",
+      "It would block the main thread forever"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "react",
+    "concept": "lifecycle",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "React.memo only helps when:",
+    "options": [
+      "Props are referentially stable between renders",
+      "Props change every render",
+      "The component has no props",
+      "State is global"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "In Node.js, a Readable stream is used to:",
+    "options": [
+      "Consume data from a source piece by piece",
+      "Only write data to a file",
+      "Replace the event loop",
+      "Hash passwords"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Which method connects a Readable stream to a Writable stream?",
+    "options": [".pipe()", ".join()", ".connect()", ".merge()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "Streams are preferred over reading a whole file into memory because they:",
+    "options": [
+      "Process data in chunks, keeping memory usage low",
+      "Are always faster for tiny files",
+      "Disable backpressure",
+      "Avoid using buffers entirely"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "A Writable stream emits which event when all data has been flushed?",
+    "options": ["'finish'", "'data'", "'open'", "'readable'"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -479,14 +2799,29 @@
     "concept": "streams",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "Why are streams useful in Node.js?",
+    "text": "fs.createReadStream returns what kind of stream?",
+    "options": ["A Readable stream", "A Writable stream", "A Duplex socket", "A plain Buffer"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "The 'data' event on a Readable stream delivers:",
     "options": [
-      "They make code run faster by using multiple threads",
-      "They process data chunk by chunk without loading it all into memory",
-      "They automatically cache responses",
-      "They replace callbacks entirely"
+      "A chunk of the stream's contents",
+      "The entire file at once",
+      "Only the file size",
+      "A close code"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -499,14 +2834,1299 @@
     "concept": "streams",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "Which of these is a readable stream in Node.js?",
+    "text": "Which stream type is both readable and writable?",
+    "options": ["Duplex", "Readable", "Writable", "Passive"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "Calling .pipe() automatically handles:",
     "options": [
-      "fs.createWriteStream()",
-      "process.stdout",
-      "fs.createReadStream()",
-      "net.createServer()"
+      "Backpressure between source and destination",
+      "Database transactions",
+      "JWT verification",
+      "DNS resolution"
     ],
-    "correct_index": 2,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "Backpressure in streams refers to:",
+    "options": [
+      "A slow consumer signaling a fast producer to pause",
+      "A memory leak in the event loop",
+      "Compression of chunks",
+      "Encryption of data"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "A Transform stream is a Duplex stream that:",
+    "options": [
+      "Modifies or transforms data as it passes through",
+      "Can only read",
+      "Can only write",
+      "Never emits events"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "In object mode, a stream's chunks are:",
+    "options": [
+      "Arbitrary JavaScript objects rather than Buffers/strings",
+      "Always JSON strings",
+      "Limited to 16 KB",
+      "Disabled"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "highWaterMark configures:",
+    "options": [
+      "The internal buffer size threshold that triggers backpressure",
+      "The max number of streams",
+      "The TLS version",
+      "The number of CPU cores"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "When piping, an error on the source stream:",
+    "options": [
+      "Is not automatically forwarded to the destination; you must handle it",
+      "Always crashes Node silently",
+      "Is ignored entirely",
+      "Closes the process"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "stream.pipeline() is preferred over .pipe() chains because it:",
+    "options": [
+      "Propagates errors and cleans up all streams on failure",
+      "Is synchronous",
+      "Skips backpressure",
+      "Avoids callbacks entirely"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Reading with stream.read(0) is sometimes used to:",
+    "options": [
+      "Trigger the 'readable' event without consuming data",
+      "Delete the stream",
+      "Flush to disk",
+      "Reset the highWaterMark"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Pausing a flowing Readable stream is done with:",
+    "options": [".pause()", ".stop()", ".halt()", ".end()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "A custom Readable implements which method to supply data?",
+    "options": ["_read(size)", "_consume()", "_emit()", "read_data()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "To correctly signal end-of-data from a custom Readable you:",
+    "options": ["push(null)", "return false", "throw EOF", "call end()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "A Transform stream implements _transform(chunk, enc, cb); calling cb(err) will:",
+    "options": [
+      "Emit an 'error' and destroy the stream",
+      "Silently skip the chunk",
+      "Pause the pipeline forever",
+      "Restart the stream"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "If _read pushes data faster than consumed, the internal buffer:",
+    "options": [
+      "Grows until highWaterMark, then push() returns false to signal a pause",
+      "Is discarded immediately",
+      "Crashes the process",
+      "Switches to object mode"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Mixing 'data' listeners with async/await on the same stream risks:",
+    "options": [
+      "Losing chunks because adding a 'data' listener switches to flowing mode",
+      "A syntax error",
+      "Doubling memory",
+      "Disabling pipe"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "stream.finished(stream, cb) is used to:",
+    "options": [
+      "Get notified when a stream is no longer readable/writable, including on error",
+      "Force-close all sockets",
+      "Compress remaining data",
+      "Reset backpressure"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "A Duplex stream's readable and writable sides are:",
+    "options": [
+      "Independent, each with its own buffer and state",
+      "Always identical",
+      "Shared one buffer",
+      "Mutually exclusive"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "streams",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Async iteration (for await...of) over a Readable stream:",
+    "options": [
+      "Consumes chunks sequentially and respects backpressure",
+      "Reads the whole file into memory first",
+      "Ignores errors",
+      "Requires object mode"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "Node's EventEmitter lets objects:",
+    "options": [
+      "Emit named events and register listeners for them",
+      "Open TCP sockets only",
+      "Read files synchronously",
+      "Parse JSON"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Which method registers a listener for an event?",
+    "options": [".on(name, fn)", ".fire(name)", ".listen(name)", ".bind(name)"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "To emit an event you call:",
+    "options": [".emit(name, ...args)", ".trigger(name)", ".send(name)", ".dispatch(name)"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": ".once(name, fn) registers a listener that:",
+    "options": [
+      "Runs at most one time, then is removed",
+      "Runs forever",
+      "Runs only on error",
+      "Runs synchronously before emit"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.25,
+    "text": "Removing a specific listener uses:",
+    "options": [
+      ".off(name, fn) / .removeListener(name, fn)",
+      ".delete(fn)",
+      ".clear(name)",
+      ".unbind()"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "Listeners for the same event are called:",
+    "options": [
+      "Synchronously, in the order they were registered",
+      "In random order",
+      "On the next tick only",
+      "In reverse order"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.3,
+    "text": "Many core Node objects (streams, servers) inherit from:",
+    "options": ["EventEmitter", "Buffer", "Promise", "Array"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "emitter.emit returns:",
+    "options": [
+      "true if the event had listeners, false otherwise",
+      "the listener count",
+      "always undefined",
+      "the event name"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "An EventEmitter that emits 'error' with no listener will:",
+    "options": [
+      "Throw and typically crash the process",
+      "Silently ignore it",
+      "Retry automatically",
+      "Log a warning only"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "The default max listeners warning fires after:",
+    "options": [
+      "More than 10 listeners are added for one event",
+      "100 listeners",
+      "1 listener",
+      "Any error"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "setMaxListeners(n) is used to:",
+    "options": [
+      "Adjust the threshold before the memory-leak warning",
+      "Cap total events",
+      "Delete listeners",
+      "Throttle emit"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "Passing data to listeners is done by:",
+    "options": [
+      "Providing extra arguments to emit()",
+      "Returning from on()",
+      "Setting emitter.data",
+      "Throwing the data"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "prependListener differs from on by:",
+    "options": [
+      "Adding the listener to the front of the queue",
+      "Running it once",
+      "Running it async",
+      "Removing others"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "emitter.listeners(name) returns:",
+    "options": [
+      "A copy of the array of listeners for that event",
+      "The number of listeners",
+      "The last emitted value",
+      "A boolean"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Emitting is synchronous, which means a long listener will:",
+    "options": [
+      "Block the event loop until it returns",
+      "Run on a worker thread",
+      "Be queued for next tick",
+      "Be skipped"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "To run listener logic asynchronously you typically:",
+    "options": [
+      "Defer work with setImmediate/queueMicrotask inside the listener",
+      "Mark the event async",
+      "Use .onAsync()",
+      "Return a promise from emit"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "events.once(emitter, name) returns a promise that:",
+    "options": [
+      "Resolves with the event args, or rejects on 'error'",
+      "Never rejects",
+      "Resolves immediately",
+      "Resolves with listener count"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "events.on(emitter, name) yields an async iterator that:",
+    "options": [
+      "Lets you for-await over emitted events",
+      "Removes all listeners",
+      "Emits synchronously",
+      "Returns a Buffer"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "Capturing rejections from async listeners requires:",
+    "options": [
+      "The captureRejections option / Symbol.for('nodejs.rejection')",
+      "try/catch around emit",
+      "Nothing; it is automatic",
+      "A domain"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "A common memory leak with EventEmitters comes from:",
+    "options": [
+      "Registering listeners repeatedly without removing them",
+      "Using .once()",
+      "Emitting too fast",
+      "Small payloads"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "emit() being synchronous means errors thrown in a listener:",
+    "options": [
+      "Propagate synchronously out of the emit() call",
+      "Are caught by Node automatically",
+      "Become unhandled rejections",
+      "Are queued"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "To guarantee a listener sees only the first of many rapid emits, use:",
+    "options": [
+      ".once() plus your own debouncing/guard",
+      ".on() alone",
+      "setMaxListeners(1)",
+      "prependListener"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "newListener is a special event emitted:",
+    "options": [
+      "Before a listener is added, allowing introspection",
+      "After every emit",
+      "Only on error",
+      "When the process exits"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "events",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Wrapping an EventEmitter API as a promise is best done with:",
+    "options": [
+      "events.once for one-shot events to avoid leaks",
+      "an infinite .on loop",
+      "polling",
+      "process.nextTick"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "In CommonJS, you export values by assigning to:",
+    "options": ["module.exports", "export default", "window.exports", "global.module"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "You import a CommonJS module with:",
+    "options": ["require('name')", "import name", "include('name')", "load('name')"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "An ES module imports with:",
+    "options": ["import x from 'name'", "require('name')", "using x", "load x"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "A file is treated as an ES module when:",
+    "options": [
+      "It has .mjs extension or package.json has \"type\":\"module\"",
+      "It contains a class",
+      "It uses async",
+      "It imports fs"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.25,
+    "text": "require caches a module so that:",
+    "options": [
+      "Repeated requires return the same cached exports",
+      "Each require re-runs the file",
+      "It reloads on change",
+      "It clears memory"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "The built-in HTTP module is imported with:",
+    "options": [
+      "require('http') or import http from 'node:http'",
+      "require('server')",
+      "import web",
+      "load('http')"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.3,
+    "text": "__dirname in CommonJS holds:",
+    "options": [
+      "The directory path of the current module",
+      "The file's contents",
+      "The process id",
+      "The home directory"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "package.json's \"main\" field specifies:",
+    "options": [
+      "The package's entry point file",
+      "The license",
+      "The test command",
+      "The Node version"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "ES modules are loaded:",
+    "options": [
+      "Asynchronously and are statically analyzable",
+      "Synchronously like require",
+      "Only at runtime via eval",
+      "Never cached"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "__dirname and __filename are not defined in ES modules; instead use:",
+    "options": [
+      "import.meta.url (with fileURLToPath)",
+      "process.dirname",
+      "global.__dirname",
+      "require.main"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "The \"exports\" field in package.json lets you:",
+    "options": [
+      "Define and restrict a package's public entry points",
+      "List dependencies",
+      "Set the license",
+      "Enable TypeScript"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "A circular require in CommonJS returns:",
+    "options": [
+      "A partially-populated exports object for the unfinished module",
+      "undefined always",
+      "an error",
+      "the full module regardless"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Top-level await is allowed in:",
+    "options": ["ES modules", "CommonJS modules", "JSON files", "any function"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "Importing a CommonJS module from an ES module gives you:",
+    "options": [
+      "Its module.exports as the default export",
+      "Named exports only",
+      "Nothing",
+      "A promise of the file"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Conditional exports (\"import\" vs \"require\") let a package:",
+    "options": [
+      "Ship different files for ESM and CJS consumers",
+      "Encrypt its source",
+      "Skip dependencies",
+      "Run tests"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "Dynamic import() returns:",
+    "options": [
+      "A promise that resolves to the module namespace",
+      "The default export synchronously",
+      "undefined",
+      "a require cache key"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "ESM bindings are live, meaning an imported value:",
+    "options": [
+      "Reflects later reassignments in the exporting module",
+      "Is a frozen copy",
+      "Cannot be read twice",
+      "Is always undefined"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "CommonJS exports are copied by value/reference at require time, so reassigning module.exports later:",
+    "options": [
+      "Is not seen by code that already required the module",
+      "Updates all importers live",
+      "Throws",
+      "Clears the cache"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "The ESM resolution algorithm differs from CJS in that it:",
+    "options": [
+      "Requires explicit file extensions and does not do index.js magic by default",
+      "Ignores package.json",
+      "Always uses .js",
+      "Skips node_modules"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "To clear a cached CommonJS module you:",
+    "options": [
+      "delete require.cache[require.resolve('name')]",
+      "call require.reload()",
+      "set module.fresh = true",
+      "restart V8"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Loading ESM is split into phases; the linking phase:",
+    "options": [
+      "Resolves and wires up all imports before evaluation",
+      "Runs the top-level code",
+      "Caches to disk",
+      "Minifies the module"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "import assertions / attributes (e.g. with { type: 'json' }) are used to:",
+    "options": [
+      "Tell the loader how to interpret a non-JS module",
+      "Encrypt imports",
+      "Skip caching",
+      "Enable await"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "A dual package can suffer the 'dual package hazard' when:",
+    "options": [
+      "ESM and CJS copies of the same package hold separate state",
+      "It has no main field",
+      "It uses TypeScript",
+      "It lacks tests"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "nodejs",
+    "concept": "modules",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Custom ESM loaders (module.register / loader hooks) let you:",
+    "options": [
+      "Intercept resolution and transform source before evaluation",
+      "Bypass the event loop",
+      "Disable require",
+      "Compile to native"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "A decorator in Python is fundamentally:",
+    "options": [
+      "A callable that takes a function and returns a function",
+      "A type of loop",
+      "A class attribute",
+      "A comment directive"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "The @ syntax above a function definition is:",
+    "options": [
+      "Syntactic sugar for func = decorator(func)",
+      "A type annotation",
+      "A docstring",
+      "An import"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -519,14 +4139,34 @@
     "concept": "decorators",
     "difficulty": "basic",
     "difficulty_score": 0.2,
-    "text": "What is a decorator in Python?",
+    "text": "Decorators are commonly used to:",
     "options": [
-      "A type of comment",
-      "A function that wraps another function to extend its behaviour",
-      "A class method",
-      "A way to declare constants"
+      "Add behavior like logging or timing around a function",
+      "Delete functions",
+      "Rename modules",
+      "Parse JSON"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "@staticmethod turns a method into one that:",
+    "options": [
+      "Receives no implicit self or cls argument",
+      "Always returns None",
+      "Runs on import",
+      "Caches results"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -539,14 +4179,399 @@
     "concept": "decorators",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "What does @staticmethod do in Python?",
+    "text": "@property lets you:",
     "options": [
-      "Makes the method private",
-      "Defines a method that does not receive self or cls as first argument",
-      "Caches the method result",
-      "Makes the class immutable"
+      "Access a method like an attribute",
+      "Make a class abstract",
+      "Freeze an object",
+      "Add type hints"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "@classmethod's first parameter is conventionally:",
+    "options": ["cls, the class itself", "self", "this", "obj"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.3,
+    "text": "Stacking two decorators @a @b on f means:",
+    "options": ["f = a(b(f))", "f = b(a(f))", "f runs twice", "a and b merge"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "A decorator must ultimately return:",
+    "options": ["Something callable to replace the original", "None", "A string", "The class"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "functools.wraps is used in a decorator to:",
+    "options": [
+      "Preserve the wrapped function's name, docstring, and metadata",
+      "Make it run faster",
+      "Cache its result",
+      "Convert it to a class"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "To write a decorator that accepts arguments you:",
+    "options": [
+      "Add an extra outer function layer that returns the decorator",
+      "Use @ twice",
+      "Pass them to wraps",
+      "Make it a class only"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "functools.lru_cache memoizes a function based on:",
+    "options": [
+      "Its arguments (which must be hashable)",
+      "Its return type",
+      "Its name",
+      "The current time"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "A class can act as a decorator if it implements:",
+    "options": ["__call__", "__init__ only", "__repr__", "__enter__"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Without functools.wraps, the decorated function's __name__ becomes:",
+    "options": ["The name of the inner wrapper function", "Unchanged", "None", "An error"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "Decorators are applied:",
+    "options": [
+      "At function definition time, once",
+      "On every call",
+      "Only when imported twice",
+      "At interpreter exit"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "@functools.cached_property differs from @property by:",
+    "options": [
+      "Computing once and caching the value on the instance",
+      "Recomputing every access",
+      "Being class-level",
+      "Requiring args"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "To preserve correct introspection, a decorator should:",
+    "options": [
+      "Forward *args and **kwargs to the wrapped function",
+      "Hard-code two parameters",
+      "Ignore arguments",
+      "Return a string"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "A parameterized decorator @deco(x) evaluates by:",
+    "options": [
+      "Calling deco(x) first, then applying its return value to the function",
+      "Applying deco directly to x",
+      "Running the function twice",
+      "Ignoring x"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "lru_cache(maxsize=None) provides:",
+    "options": [
+      "An unbounded cache that never evicts entries",
+      "A cache of size 1",
+      "No caching",
+      "A weak cache"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "A decorator implemented as a class storing state across calls works because:",
+    "options": [
+      "The instance persists and __call__ runs per invocation",
+      "Classes cannot hold state",
+      "Python re-instantiates each call",
+      "It uses globals"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "Decorating a method inside a class with a plain function decorator means the wrapper:",
+    "options": [
+      "Receives self as its first positional argument",
+      "Loses access to self",
+      "Becomes static automatically",
+      "Cannot be called"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "functools.singledispatch enables:",
+    "options": [
+      "Function overloading based on the first argument's type",
+      "Multithreading",
+      "Caching by name",
+      "Lazy imports"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "A decorator that returns a different callable each call would break:",
+    "options": [
+      "Identity/memoization assumptions; it should usually return one stable wrapper",
+      "Nothing",
+      "Only async code",
+      "The import system"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "To make lru_cache work on a method without leaking instances, prefer:",
+    "options": [
+      "cached_property or caching keyed off hashable args, avoiding self leaks",
+      "lru_cache directly on the method always",
+      "global dicts",
+      "no caching ever"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "decorators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "Class decorators receive and return:",
+    "options": [
+      "The class object, allowing it to be modified or replaced",
+      "An instance",
+      "A metaclass only",
+      "None"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "A generator function is defined using:",
+    "options": ["yield inside a function", "return only", "async def", "@generator"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Calling a generator function returns:",
+    "options": ["A generator object (an iterator)", "The first value", "A list", "None"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -559,9 +4584,69 @@
     "concept": "generators",
     "difficulty": "basic",
     "difficulty_score": 0.2,
-    "text": "What keyword turns a function into a generator in Python?",
-    "options": ["return", "async", "yield", "generate"],
-    "correct_index": 2,
+    "text": "yield differs from return because it:",
+    "options": [
+      "Pauses the function and resumes later, preserving state",
+      "Ends the function permanently",
+      "Raises an error",
+      "Returns a list"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "You advance a generator with:",
+    "options": ["next(gen)", "gen.run()", "gen.step()", "call(gen)"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.25,
+    "text": "Generators are mainly used to:",
+    "options": [
+      "Produce values lazily, one at a time",
+      "Sort lists",
+      "Open files",
+      "Define classes"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "A generator expression looks like:",
+    "options": [
+      "(x*x for x in range(10))",
+      "[x*x for x in range(10)]",
+      "{x*x for x in range(10)}",
+      "lambda x: x*x"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -574,14 +4659,399 @@
     "concept": "generators",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "What is the benefit of a generator over a list?",
+    "text": "When a generator has no more values, next() raises:",
+    "options": ["StopIteration", "IndexError", "ValueError", "EOFError"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "A key memory advantage of generators is that they:",
     "options": [
-      "Generators are faster to index",
-      "Generators produce values lazily saving memory",
-      "Generators support more data types",
-      "Generators run in parallel"
+      "Do not build the whole sequence in memory at once",
+      "Always run faster",
+      "Use multiple cores",
+      "Cache all values"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "yield from is used to:",
+    "options": [
+      "Delegate iteration to a sub-iterator/sub-generator",
+      "Return early",
+      "Catch exceptions",
+      "Define a coroutine"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "gen.send(value) does what?",
+    "options": [
+      "Resumes the generator, making the paused yield evaluate to value",
+      "Sends an email",
+      "Restarts the generator",
+      "Closes it"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "A generator's return value (PEP 380) is delivered via:",
+    "options": [
+      "The StopIteration exception's value attribute",
+      "next()'s return",
+      "a global",
+      "yield"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "gen.close() raises inside the generator:",
+    "options": ["GeneratorExit at the paused yield", "StopIteration", "KeyError", "nothing"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Generators are lazy, so an infinite generator is fine as long as you:",
+    "options": ["Consume only a finite prefix of it", "Call list() on it", "Sort it", "Reverse it"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "itertools is useful with generators because it provides:",
+    "options": [
+      "Lazy building blocks like islice, chain, and count",
+      "GUI widgets",
+      "HTTP servers",
+      "JSON parsing"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "Iterating a generator a second time yields:",
+    "options": [
+      "Nothing; it is already exhausted",
+      "The same values again",
+      "An error",
+      "Reversed values"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "yield from sub also forwards:",
+    "options": [
+      "send() and throw() to the delegated generator",
+      "Only the first value",
+      "Exceptions only",
+      "Nothing"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "gen.throw(Exc) does what?",
+    "options": [
+      "Raises Exc at the point where the generator is paused",
+      "Returns Exc",
+      "Closes silently",
+      "Restarts the generator"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "A generator used as a coroutine (pre-async) could:",
+    "options": [
+      "Receive values via send and produce via yield, two-way",
+      "Only produce values",
+      "Run on threads",
+      "Not be paused"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "yield from g returns to the delegating generator:",
+    "options": [
+      "The value of StopIteration raised by g",
+      "g's last yield",
+      "None always",
+      "a list of g's values"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "Wrapping a generator in contextlib.contextmanager makes yield:",
+    "options": [
+      "Split setup (before yield) and teardown (after yield) for a with-block",
+      "Return a file",
+      "Run async",
+      "Disable StopIteration"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "If a GeneratorExit is caught and the generator yields again, Python:",
+    "options": [
+      "Raises RuntimeError because it must not yield during close",
+      "Restarts it",
+      "Ignores it",
+      "Returns None"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "Generator state (local variables) is stored:",
+    "options": [
+      "On the generator object's frame, persisting between next() calls",
+      "In globals",
+      "On the stack only during a call",
+      "In a cache file"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "Chaining generators (pipelines) is efficient because each stage:",
+    "options": [
+      "Pulls one item at a time on demand, keeping memory flat",
+      "Materializes a full list",
+      "Runs in parallel threads",
+      "Caches everything"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "generators",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "A subtle bug with generators in a loop closure is that:",
+    "options": [
+      "Late binding means they may all see the final loop variable value",
+      "They cannot be nested",
+      "They ignore yield",
+      "They run eagerly"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.15,
+    "text": "An async function is declared with:",
+    "options": ["async def", "def async", "@async", "function*"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.18,
+    "text": "Calling an async function returns:",
+    "options": ["A coroutine object", "Its result directly", "A thread", "None"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.2,
+    "text": "Inside an async function you wait on another coroutine with:",
+    "options": ["await", "yield", "return", "wait()"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.22,
+    "text": "To actually run a top-level coroutine you typically use:",
+    "options": ["asyncio.run(main())", "main()", "thread.start()", "run(main)"],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -594,14 +5064,34 @@
     "concept": "async",
     "difficulty": "basic",
     "difficulty_score": 0.25,
-    "text": "What does the async keyword do in Python?",
+    "text": "asyncio is best suited for:",
     "options": [
-      "Makes a function run in a separate thread",
-      "Defines a coroutine that can be awaited",
-      "Speeds up the function automatically",
-      "Disables the GIL for that function"
+      "I/O-bound concurrency",
+      "CPU-bound number crunching",
+      "Replacing all threads",
+      "Compiling code"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.28,
+    "text": "await can only be used:",
+    "options": [
+      "Inside an async function",
+      "Anywhere",
+      "In class bodies",
+      "In list comprehensions only"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
@@ -614,14 +5104,334 @@
     "concept": "async",
     "difficulty": "basic",
     "difficulty_score": 0.3,
-    "text": "What does await do in an async function?",
+    "text": "An event loop in asyncio is responsible for:",
     "options": [
-      "Blocks the entire program until done",
-      "Pauses the coroutine and yields control back to the event loop",
-      "Creates a new thread",
-      "Converts the result to a promise"
+      "Scheduling and running coroutines and callbacks",
+      "Garbage collection",
+      "Parsing source",
+      "Type checking"
     ],
-    "correct_index": 1,
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "basic",
+    "difficulty_score": 0.33,
+    "text": "asyncio.sleep(1) differs from time.sleep(1) because it:",
+    "options": [
+      "Yields control to the event loop instead of blocking the thread",
+      "Sleeps twice as long",
+      "Blocks all coroutines",
+      "Is synchronous"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.42,
+    "text": "asyncio.gather is used to:",
+    "options": [
+      "Run multiple awaitables concurrently and collect their results",
+      "Run them strictly in sequence",
+      "Cancel all tasks",
+      "Create threads"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.46,
+    "text": "asyncio.create_task schedules a coroutine to:",
+    "options": [
+      "Run concurrently on the event loop right away",
+      "Run only when awaited",
+      "Run on a new process",
+      "Block the loop"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.5,
+    "text": "A blocking (synchronous) call inside a coroutine will:",
+    "options": [
+      "Stall the entire event loop until it returns",
+      "Run on another core automatically",
+      "Be skipped",
+      "Raise immediately"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.53,
+    "text": "To run blocking code without stalling the loop, use:",
+    "options": ["asyncio.to_thread / run_in_executor", "time.sleep", "a bare await", "gather"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.56,
+    "text": "Awaiting a coroutine vs awaiting a Task differs in that a Task:",
+    "options": [
+      "Is already scheduled and runs concurrently before you await it",
+      "Cannot be awaited",
+      "Runs synchronously",
+      "Blocks creation"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.59,
+    "text": "asyncio.gather(..., return_exceptions=True) causes exceptions to be:",
+    "options": [
+      "Returned in the results list rather than raised immediately",
+      "Ignored entirely",
+      "Logged only",
+      "Re-raised twice"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.62,
+    "text": "An 'async with' statement requires the context manager to define:",
+    "options": ["__aenter__ and __aexit__", "__enter__ only", "__call__", "__iter__"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "intermediate",
+    "difficulty_score": 0.65,
+    "text": "'async for' iterates over an object implementing:",
+    "options": ["__aiter__ and __anext__", "__next__ only", "yield", "__getitem__"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.72,
+    "text": "Cancelling a Task raises inside the coroutine:",
+    "options": [
+      "asyncio.CancelledError at the current await point",
+      "StopIteration",
+      "TimeoutError",
+      "nothing"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.76,
+    "text": "asyncio.wait_for(coro, timeout) on timeout will:",
+    "options": [
+      "Cancel the coroutine and raise TimeoutError",
+      "Return None silently",
+      "Block forever",
+      "Retry automatically"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.79,
+    "text": "A 'fire and forget' task whose reference is dropped may:",
+    "options": [
+      "Be garbage collected and never finish; keep a reference",
+      "Always complete",
+      "Run on a thread",
+      "Raise at creation"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.82,
+    "text": "asyncio.TaskGroup (3.11+) improves on gather by:",
+    "options": [
+      "Providing structured concurrency that cancels siblings on failure",
+      "Running synchronously",
+      "Disabling cancellation",
+      "Avoiding await"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.85,
+    "text": "Mixing two event loops (e.g., calling asyncio.run twice nested) causes:",
+    "options": [
+      "A RuntimeError because a loop is already running",
+      "Faster execution",
+      "Silent success",
+      "A new thread"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.88,
+    "text": "An un-awaited coroutine triggers:",
+    "options": [
+      "A 'coroutine was never awaited' RuntimeWarning",
+      "An immediate result",
+      "A syntax error",
+      "A new task"
+    ],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.9,
+    "text": "Shielding a coroutine from cancellation uses:",
+    "options": ["asyncio.shield", "asyncio.protect", "task.lock()", "await guard"],
+    "correct_index": 0,
+    "source": "manual",
+    "status": "active",
+    "metadata": {
+      "prompt_version": "v1",
+      "model": "manual"
+    }
+  },
+  {
+    "technology": "python",
+    "concept": "async",
+    "difficulty": "advanced",
+    "difficulty_score": 0.93,
+    "text": "CPU-bound work in asyncio is best offloaded to:",
+    "options": [
+      "A process pool via run_in_executor, since the GIL blocks threads",
+      "More coroutines",
+      "asyncio.sleep",
+      "a tight await loop"
+    ],
+    "correct_index": 0,
     "source": "manual",
     "status": "active",
     "metadata": {
