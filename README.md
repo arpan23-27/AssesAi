@@ -1,25 +1,22 @@
-﻿# AssesAI - Adaptive Assessment Platform
+# AssesAI — Adaptive Assessment Platform
+
 ![CI](https://github.com/arpan23-27/AssesAi/actions/workflows/ci.yml/badge.svg)
+
 An adaptive quiz platform that targets a learner's weakest concept, adjusts
 question difficulty in real time using a transparent heuristic, and streams
 AI-generated explanations for wrong answers.
 
-The whole platform runs on a **single PostgreSQL database** plus Redis. All
-answer grading and scoring happen on the server â€” the client is never trusted.
+**Live demo:** _coming soon_ — replace this line with your deployed URL once the
+frontend is live (e.g. `https://assesai.vercel.app`).
 
-## Tech stack
+<!--
+  Demo GIF: record a 20–30s screen capture of one full quiz run (start a quiz →
+  answer a few questions → get a streamed AI explanation → see the result) and
+  drop it in `docs/demo.gif`, then uncomment the line below.
+-->
+<!-- ![AssesAI demo](docs/demo.gif) -->
 
-| Layer            | Technology                                                    |
-| ---------------- | ------------------------------------------------------------- |
-| Frontend         | React 19, Zustand, TanStack Query, Vite                       |
-| Backend          | Node.js, Express 5                                            |
-| Database         | PostgreSQL (relational tables + JSONB for the question bank)  |
-| Cache / sessions | Redis (access-token blacklist + AI explanation cache)        |
-| Auth             | JWT access token + httpOnly refresh cookie, Argon2id          |
-| AI               | Groq API (Llama / Mixtral) via the OpenAI-compatible SDK      |
-| Tooling          | Docker Compose, ESLint, Prettier, Husky, Jest, GitHub Actions |
-
-## Quick start (one command)
+## Run it in one command
 
 Prerequisites: Docker + Docker Compose, and a [Groq API key](https://console.groq.com).
 
@@ -31,8 +28,9 @@ docker compose up --build
 ```
 
 That brings up PostgreSQL, Redis, and the API. On boot the API container runs
-migrations and seeds the question bank automatically, then starts on
-**http://localhost:3000** (health check at `/health`).
+migrations and seeds the question bank (288 questions across 4 technologies, 3
+difficulty tiers each) automatically, then starts on **http://localhost:3000**
+(health check at `/health`).
 
 Generate a JWT secret with:
 
@@ -40,9 +38,25 @@ Generate a JWT secret with:
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
 
+The whole platform runs on a **single PostgreSQL database** plus Redis. All
+answer grading and scoring happen on the server — the client is never trusted.
+
+## Tech stack
+
+| Layer            | Technology                                                    |
+| ---------------- | ------------------------------------------------------------- |
+| Frontend         | React 19, Zustand, TanStack Query, Vite                       |
+| Backend          | Node.js, Express 5                                            |
+| Database         | PostgreSQL (relational tables + JSONB for the question bank)  |
+| Cache / sessions | Redis (access-token blacklist + AI explanation cache)        |
+| Auth             | JWT access token + httpOnly refresh cookie, Argon2id          |
+| AI               | Groq API (Llama 3.x) via the OpenAI-compatible SDK            |
+| Tooling          | Docker Compose, ESLint, Prettier, Husky, Jest, GitHub Actions |
+
 ### Frontend (separate dev server)
 
-The single-page app talks to the API at `http://localhost:3000`:
+The single-page app talks to the API via `VITE_API_URL` (defaults to
+`http://localhost:3000/api`):
 
 ```bash
 cd frontend
@@ -52,7 +66,7 @@ npm run dev      # http://localhost:5173
 
 ### Trying the API
 
-Import `postman_collection.json` into Postman. Run **Auth â†’ Login** first (its
+Import `postman_collection.json` into Postman. Run **Auth → Login** first (its
 test script stores the access token); the quiz and results requests reuse it
 and chain `sessionId` / `questionId` automatically.
 
@@ -63,7 +77,7 @@ MongoDB while everything else lived in Postgres. For a project of this size that
 is operational overhead with no payoff: a question has a fixed shape, and the
 only semi-structured fields (`options`, generation `metadata`) are stored as
 **JSONB**. Consolidating also made the scoring query a single SQL JOIN between
-`session_answers` and `questions` â€” impossible when the two sides of that join
+`session_answers` and `questions` — impossible when the two sides of that join
 lived in different engines.
 
 **Server-authoritative scoring.** The client never sends a score. `correctCount`
@@ -75,14 +89,17 @@ leaves the API.
 **Answers bound to the active session.** Each session tracks the
 `current_question_id` that was served. An answer is rejected if it doesn't match
 that question, if the question was already answered, or if it belongs to a
-different technology â€” closing the door on IDOR and score tampering.
+different technology — closing the door on IDOR and score tampering.
 
 **Heuristic adaptation, not IRT.** Difficulty is driven by a transparent,
 unit-tested rule: three correct answers in a row promote the learner one tier,
 two wrong in a row demote one tier. Within a tier, the question whose difficulty
 score is closest to the learner's running ability is chosen, and the weakest
-concept is targeted first. This is deliberately a readable heuristic rather than
-a calibrated psychometric model â€” it keeps latency low and behaviour explainable.
+concept is targeted first. If no question is available in the target tier, the
+selector widens to the nearest adjacent tier rather than dead-ending, and every
+session runs to a fixed length. This is deliberately a readable heuristic rather
+than a calibrated psychometric model — it keeps latency low and behaviour
+explainable.
 
 **Refresh-token rotation.** Refresh tokens are single-use: every refresh issues a
 new token and revokes the old one. Reuse of an already-revoked token revokes the
@@ -94,8 +111,8 @@ Redis holds only the short-lived access-token blacklist.
 
 | Method | Path                              | Auth   | Notes                                 |
 | ------ | --------------------------------- | ------ | ------------------------------------- |
-| POST   | `/api/auth/register`              | â€”      | Argon2id password hashing             |
-| POST   | `/api/auth/login`                 | â€”      | Returns access token + refresh cookie |
+| POST   | `/api/auth/register`              | —      | Argon2id password hashing             |
+| POST   | `/api/auth/login`                 | —      | Returns access token + refresh cookie |
 | POST   | `/api/auth/refresh`               | cookie | Rotates the refresh token             |
 | POST   | `/api/auth/logout`                | yes    | Revokes refresh token, blacklists JTI |
 | POST   | `/api/quiz/sessions`              | yes    | Start a session                       |
@@ -104,23 +121,27 @@ Redis holds only the short-lived access-token blacklist.
 | GET    | `/api/results/sessions/:id`       | yes    | Session result                        |
 | GET    | `/api/results/mastery`            | yes    | Per-concept mastery                   |
 | POST   | `/api/ai/explain`                 | yes    | SSE; gated to genuinely-wrong answers |
-| POST   | `/api/ai/generate`                | admin  | Generate a new question               |
+| POST   | `/api/ai/generate`                | admin  | Generate a question (`pending_review`)|
 
 Every request body and path parameter is validated with Zod; all errors flow
 through a single Express error-handling middleware that returns a consistent
 JSON shape (`{ error: { code, message, details } }`). AI endpoints are
 rate-limited per user to protect Groq API credits.
 
+The `/api/ai/generate` endpoint is admin-only. Seed an admin user by setting
+`ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env` before the seed step runs (the
+docker-compose boot sequence runs it automatically); generated questions are
+persisted with `source = 'ai_generated'` and `status = 'pending_review'`.
+
 ## Running tests
 
 ```bash
 cd backend
-npm test          # adaptive unit tests + auth integration (login -> refresh -> logout)
+npm test          # adaptive unit tests + auth & quiz integration tests
 ```
 
-The adaptive-logic tests are pure and need no infrastructure. The auth
-integration tests require PostgreSQL and Redis; CI provisions both as service
-containers.
+The adaptive-logic tests are pure and need no infrastructure. The integration
+tests require PostgreSQL and Redis; CI provisions both as service containers.
 
 ## Code quality
 
@@ -155,23 +176,22 @@ npm install        # runs husky setup via the prepare script
 
 ```
 AssesAi/
-â”œâ”€â”€ docker-compose.yml          # one-command app + postgres + redis
-â”œâ”€â”€ postman_collection.json
-â”œâ”€â”€ .github/workflows/ci.yml
-â”œâ”€â”€ backend/
-â”‚   â””â”€â”€ src/
-â”‚       â”œâ”€â”€ config/             # db, redis, AI client
-â”‚       â”œâ”€â”€ middleware/         # auth, validation, rate limiting, RBAC, errors
-â”‚       â”œâ”€â”€ migrations/         # ordered SQL (run by src/migrate.js)
-â”‚       â”œâ”€â”€ modules/            # auth, quiz, ai, results
-â”‚       â”œâ”€â”€ repositories/       # data-access layer (all PostgreSQL)
-â”‚       â”œâ”€â”€ seeds/              # technologies + question bank
-â”‚       â”œâ”€â”€ tests/              # Jest unit + integration tests
-â”‚       â””â”€â”€ migrate.js          # idempotent migration runner
-â””â”€â”€ frontend/
-    â””â”€â”€ src/
-        â”œâ”€â”€ api/                # axios instance with refresh interceptor
-        â”œâ”€â”€ features/           # auth, quiz, results pages
-        â””â”€â”€ store/              # Zustand stores
+├── docker-compose.yml          # one-command app + postgres + redis
+├── postman_collection.json
+├── .github/workflows/ci.yml
+├── backend/
+│   └── src/
+│       ├── config/             # db, redis, AI client
+│       ├── middleware/         # auth, validation, rate limiting, RBAC, errors
+│       ├── migrations/         # ordered SQL (run by src/migrate.js)
+│       ├── modules/            # auth, quiz, ai, results
+│       ├── repositories/       # data-access layer (all PostgreSQL)
+│       ├── seeds/              # technologies + question bank + admin
+│       ├── tests/              # Jest unit + integration tests
+│       └── migrate.js          # idempotent migration runner
+└── frontend/
+    └── src/
+        ├── api/                # axios instance with refresh interceptor
+        ├── features/           # auth, quiz, results pages
+        └── store/              # Zustand stores
 ```
-

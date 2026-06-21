@@ -21,6 +21,31 @@ const TIERS = ['basic', 'intermediate', 'advanced'];
 const PROMOTE_AFTER_CORRECT = 3; // 3 correct in a row → harder tier
 const DEMOTE_AFTER_WRONG = 2; // 2 wrong in a row → easier tier
 
+// Hard cap on questions per session. The quiz ends deterministically here even
+// for a learner who keeps answering correctly, so "doing well" can never
+// dead-end the session — it completes.
+const MAX_QUESTIONS = 12;
+
+/**
+ * Tiers ordered by proximity to a target tier, nearest first. Used to widen the
+ * search when the target tier has no available question (e.g. a strong learner
+ * is promoted to 'advanced' but that pool is momentarily exhausted), so
+ * selection falls back to the closest adjacent tier instead of returning null.
+ * @param {string} target one of TIERS
+ * @returns {Array<string>}
+ */
+function tiersByProximity(target) {
+  let targetIdx = TIERS.indexOf(target);
+  if (targetIdx === -1) targetIdx = 0;
+  return [...TIERS].sort((a, b) => {
+    const da = Math.abs(TIERS.indexOf(a) - targetIdx);
+    const db = Math.abs(TIERS.indexOf(b) - targetIdx);
+    // Equal distance → prefer the easier tier (lower index).
+    if (da === db) return TIERS.indexOf(a) - TIERS.indexOf(b);
+    return da - db;
+  });
+}
+
 /**
  * Pick the question whose difficulty_score is closest to `abilityScore`.
  * @param {Array} questions
@@ -117,8 +142,10 @@ module.exports = {
   TIERS,
   PROMOTE_AFTER_CORRECT,
   DEMOTE_AFTER_WRONG,
+  MAX_QUESTIONS,
   selectQuestion,
   updateAbilityScore,
   selectConcept,
   nextDifficulty,
+  tiersByProximity,
 };

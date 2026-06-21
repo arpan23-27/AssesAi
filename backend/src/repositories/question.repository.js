@@ -1,6 +1,7 @@
 // src/repositories/question.repository.js
 // PostgreSQL-backed question store. `options` and `metadata` are JSONB and come
 // back already parsed into JS values by node-postgres.
+const crypto = require('crypto');
 const db = require('../config/db');
 
 // UUID v4 shape — used to short-circuit lookups for malformed ids instead of
@@ -73,8 +74,51 @@ async function findConceptsByTechnology(technology) {
   return result.rows.map((r) => r.concept);
 }
 
+/**
+ * Persist an AI-generated question for review. Written as source='ai_generated'
+ * and status='pending_review' so it is excluded from the live pool (which
+ * filters on status='active') until an admin promotes it. Idempotent on the
+ * sha256 text_hash: a duplicate text returns null instead of inserting.
+ * @returns {Promise<Object|null>} the inserted row, or null if the text exists.
+ */
+async function insertGeneratedQuestion({
+  technology,
+  concept,
+  difficulty,
+  difficultyScore,
+  text,
+  options,
+  correctIndex,
+  model,
+  promptVersion,
+}) {
+  const textHash = crypto.createHash('sha256').update(text).digest('hex');
+  const result = await db.query(
+    `INSERT INTO questions
+       (technology, concept, difficulty, difficulty_score, text,
+        options, correct_index, source, status, metadata, text_hash)
+     VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7,
+             'ai_generated', 'pending_review', $8::jsonb, $9)
+     ON CONFLICT (text_hash) DO NOTHING
+     RETURNING ${BASE_COLUMNS}`,
+    [
+      technology,
+      concept,
+      difficulty,
+      difficultyScore,
+      text,
+      JSON.stringify(options),
+      correctIndex,
+      JSON.stringify({ prompt_version: promptVersion, model }),
+      textHash,
+    ]
+  );
+  return result.rows[0] || null;
+}
+
 module.exports = {
   findById,
   findByConceptAndDifficulty,
   findConceptsByTechnology,
+  insertGeneratedQuestion,
 };

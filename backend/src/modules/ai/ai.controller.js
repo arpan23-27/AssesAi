@@ -16,13 +16,15 @@ async function explainAnswer(req, res, next) {
 async function generateQuestions(req, res, next) {
   try {
     const { technology, concept, difficulty, existingCount } = req.body;
-    const question = await aiService.generateQuestions({
+    const result = await aiService.generateQuestions({
       technology,
       concept,
       difficulty,
       existingCount,
     });
-    res.json(question);
+    // 201 when a new pending_review question was written, 200 when it already
+    // existed (idempotent on the question text).
+    res.status(result.status === 'pending_review' ? 201 : 200).json(result);
   } catch (err) {
     next(err);
   }

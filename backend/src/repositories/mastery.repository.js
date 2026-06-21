@@ -11,7 +11,7 @@ async function findByUserAndConcept({ userId, technologyId, concept }) {
   return result.rows[0] || null;
 }
 
-async function upsertMastery({ userId, technologyId, concept, newAbilityScore, isCorrect }) {
+async function upsertMastery({ userId, technologyId, concept, newAbilityScore, isCorrect }, client) {
   await db.query(
     `INSERT INTO user_concept_mastery (user_id, technology_id, concept, ability_score, questions_seen, questions_correct)
      VALUES ($1, $2, $3, $4, 1, CASE WHEN $5 THEN 1 ELSE 0 END)
@@ -21,7 +21,8 @@ async function upsertMastery({ userId, technologyId, concept, newAbilityScore, i
        questions_seen = user_concept_mastery.questions_seen + 1,
        questions_correct = user_concept_mastery.questions_correct + CASE WHEN $5 THEN 1 ELSE 0 END,
        updated_at = NOW()`,
-    [userId, technologyId, concept, newAbilityScore, isCorrect]
+    [userId, technologyId, concept, newAbilityScore, isCorrect],
+    client
   );
 }
 

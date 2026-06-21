@@ -1,5 +1,6 @@
 // src/repositories/quiz.session.repository.js
 const db = require('../config/db');
+const { AppError } = require('../utils/errors');
 
 const SESSION_COLUMNS = `
   id,
@@ -35,11 +36,12 @@ async function findById(id) {
  * later validated against this value so a client cannot answer an arbitrary
  * question of its choosing.
  */
-async function setCurrentQuestion(sessionId, questionId) {
-  await db.query(`UPDATE quiz_sessions SET current_question_id = $2 WHERE id = $1`, [
-    sessionId,
-    questionId,
-  ]);
+async function setCurrentQuestion(sessionId, questionId, client) {
+  await db.query(
+    `UPDATE quiz_sessions SET current_question_id = $2 WHERE id = $1`,
+    [sessionId, questionId],
+    client
+  );
 }
 
 /**
@@ -68,29 +70,43 @@ async function completeSession({
   return result.rows[0];
 }
 
-async function saveAnswer(sessionId, questionId, isCorrect) {
-  const result = await db.query(
-    `INSERT INTO session_answers (session_id, question_id, is_correct, answered_at)
-     VALUES ($1, $2, $3, NOW())
-     RETURNING id, session_id, question_id, is_correct, answered_at`,
-    [sessionId, questionId, isCorrect]
-  );
-  return result.rows[0];
+async function saveAnswer(sessionId, questionId, isCorrect, client) {
+  try {
+    const result = await db.query(
+      `INSERT INTO session_answers (session_id, question_id, is_correct, answered_at)
+       VALUES ($1, $2, $3, NOW())
+       RETURNING id, session_id, question_id, is_correct, answered_at`,
+      [sessionId, questionId, isCorrect],
+      client
+    );
+    return result.rows[0];
+  } catch (err) {
+    // UNIQUE(session_id, question_id) violation: a concurrent request already
+    // recorded this answer. Surface it as the same domain error the pre-check
+    // raises, so the double-submit race resolves cleanly.
+    if (err.code === '23505') {
+      throw new AppError('Question already answered', 409, 'QUESTION_ALREADY_ANSWERED');
+    }
+    throw err;
+  }
 }
 
-async function getAnsweredQuestionIds(sessionId) {
-  const result = await db.query(`SELECT question_id FROM session_answers WHERE session_id = $1`, [
-    sessionId,
-  ]);
+async function getAnsweredQuestionIds(sessionId, client) {
+  const result = await db.query(
+    `SELECT question_id FROM session_answers WHERE session_id = $1`,
+    [sessionId],
+    client
+  );
   return result.rows.map((r) => r.question_id);
 }
 
 /** Chronological correct/incorrect sequence for a session, oldest → newest. */
-async function getAnswerHistory(sessionId) {
+async function getAnswerHistory(sessionId, client) {
   const result = await db.query(
     `SELECT is_correct FROM session_answers
      WHERE session_id = $1 ORDER BY answered_at ASC`,
-    [sessionId]
+    [sessionId],
+    client
   );
   return result.rows.map((r) => r.is_correct);
 }

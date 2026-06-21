@@ -1,0 +1,13 @@
+# Netlify config for the AssesAI frontend (alternative to Vercel).
+# In the Netlify UI set the base directory to `frontend` and add the build-time
+# env var VITE_API_URL = https://<your-render-api>.onrender.com/api
+
+[build]
+  command = "vite build"
+  publish = "dist"
+
+# SPA fallback so client-side routes resolve to index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
