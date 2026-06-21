@@ -17,7 +17,7 @@ export default function Results() {
   })
 
   const handleLogout = async () => {
-    try { await api.post('/auth/logout') } catch (_) {}
+    try { await api.post('/auth/logout') } catch { /* ignore */ }
     useAuthStore.getState().clearAuth()
     window.location.href = '/login'
   }

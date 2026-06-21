@@ -34,7 +34,7 @@ export default function Quiz() {
   })
 
   const handleLogout = async () => {
-    try { await api.post('/auth/logout') } catch (_) {}
+    try { await api.post('/auth/logout') } catch { /* ignore */ }
     clearAuth()
     navigate('/login')
   }
@@ -128,11 +128,11 @@ export default function Quiz() {
             try {
               const parsed = JSON.parse(line.slice(6))
               if (parsed.text) setExplanation(prev => prev + parsed.text)
-            } catch (_) {}
+            } catch { /* ignore */ }
           }
         }
       }
-    } catch (err) {
+    } catch { 
       setExplanation('// AI explanation unavailable — check API quota')
     }
   }
