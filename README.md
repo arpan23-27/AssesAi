@@ -1,5 +1,5 @@
 # AssesAI — Adaptive Assessment Platform
-
+![CI](https://github.com/arpan23-27/AssesAi/actions/workflows/ci.yml/badge.svg)
 An adaptive quiz platform that targets a learner's weakest concept, adjusts
 question difficulty in real time using a transparent heuristic, and streams
 AI-generated explanations for wrong answers.
