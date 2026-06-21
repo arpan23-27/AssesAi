@@ -67,7 +67,7 @@ and chain `sessionId` / `questionId` automatically.
 
 ## Design choices & tradeoffs
 
-**One database (PostgreSQL), not two.** The question bank originally lived in
+**One database (PostgreSQL).** The question bank originally lived in
 MongoDB while everything else lived in Postgres. For a project of this size that
 is operational overhead with no payoff: a question has a fixed shape, and the
 only semi-structured fields (`options`, generation `metadata`) are stored as
@@ -86,14 +86,14 @@ leaves the API.
 that question, if the question was already answered, or if it belongs to a
 different technology — closing the door on IDOR and score tampering.
 
-**Heuristic adaptation, not IRT.** Difficulty is driven by a transparent,
+**Heuristic adaptation.** Difficulty is driven by a transparent,
 unit-tested rule: three correct answers in a row promote the learner one tier,
 two wrong in a row demote one tier. Within a tier, the question whose difficulty
 score is closest to the learner's running ability is chosen, and the weakest
 concept is targeted first. If no question is available in the target tier, the
 selector widens to the nearest adjacent tier rather than dead-ending, and every
-session runs to a fixed length. This is deliberately a readable heuristic rather
-than a calibrated psychometric model — it keeps latency low and behaviour
+session runs to a fixed length. This is deliberately a readable heuristic model.
+It keeps latency low and behaviour
 explainable.
 
 **Refresh-token rotation.** Refresh tokens are single-use: every refresh issues a
