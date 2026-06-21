@@ -39,10 +39,9 @@ describe('Quiz routes', () => {
   }
 
   beforeAll(async () => {
-    const tech = await pool.query(
-      `INSERT INTO technologies (name) VALUES ($1) RETURNING id`,
-      [techName]
-    );
+    const tech = await pool.query(`INSERT INTO technologies (name) VALUES ($1) RETURNING id`, [
+      techName,
+    ]);
     technologyId = tech.rows[0].id;
 
     await insertQuestion({

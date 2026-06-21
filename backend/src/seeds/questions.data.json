@@ -45,12 +45,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "A function that 'remembers' variables from where it was defined is called a:",
-    "options": [
-      "Closure",
-      "Callback",
-      "Promise",
-      "Generator"
-    ],
+    "options": ["Closure", "Callback", "Promise", "Generator"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -105,12 +100,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.28,
     "text": "In function outer(){ let x = 1; return function(){ return x; }; }, the inner function closes over:",
-    "options": [
-      "x",
-      "the global object",
-      "nothing",
-      "the return keyword"
-    ],
+    "options": ["x", "the global object", "nothing", "the return keyword"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -145,12 +135,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.33,
     "text": "Which variables can a closure capture from an enclosing function?",
-    "options": [
-      "Those declared with let, const, or var",
-      "Only var",
-      "Only const",
-      "None of them"
-    ],
+    "options": ["Those declared with let, const, or var", "Only var", "Only const", "None of them"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -165,12 +150,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.42,
     "text": "What does for (var i = 0; i < 3; i++) { setTimeout(() => console.log(i)); } log?",
-    "options": [
-      "3 3 3",
-      "0 1 2",
-      "0 0 0",
-      "1 2 3"
-    ],
+    "options": ["3 3 3", "0 1 2", "0 0 0", "1 2 3"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -185,12 +165,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.46,
     "text": "Switching to for (let i = 0; i < 3; i++) { setTimeout(() => console.log(i)); } logs:",
-    "options": [
-      "0 1 2",
-      "3 3 3",
-      "undefined three times",
-      "a ReferenceError"
-    ],
+    "options": ["0 1 2", "3 3 3", "undefined three times", "a ReferenceError"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -205,12 +180,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.5,
     "text": "function makeCounter(){ let c = 0; return () => ++c; } const f = makeCounter(); f(); f(); The next f() returns:",
-    "options": [
-      "3",
-      "1",
-      "0",
-      "undefined"
-    ],
+    "options": ["3", "1", "0", "undefined"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -265,12 +235,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.59,
     "text": "const fns = []; for (let i = 0; i < 3; i++) fns.push(() => i); fns[1]() returns:",
-    "options": [
-      "1",
-      "3",
-      "0",
-      "2"
-    ],
+    "options": ["1", "3", "0", "2"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -365,12 +330,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.79,
     "text": "const add = a => b => a + b; const add5 = add(5); add5(3) evaluates to:",
-    "options": [
-      "8",
-      "5",
-      "3",
-      "53"
-    ],
+    "options": ["8", "5", "3", "53"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -525,12 +485,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "Which method handles a fulfilled Promise's value?",
-    "options": [
-      ".then()",
-      ".catch()",
-      ".finally()",
-      ".throw()"
-    ],
+    "options": [".then()", ".catch()", ".finally()", ".throw()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -545,12 +500,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "Which method handles a rejected Promise?",
-    "options": [
-      ".catch()",
-      ".then()",
-      ".resolve()",
-      ".await()"
-    ],
+    "options": [".catch()", ".then()", ".resolve()", ".await()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -585,12 +535,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.28,
     "text": "The keyword used to pause an async function until a Promise settles is:",
-    "options": [
-      "await",
-      "yield",
-      "defer",
-      "hold"
-    ],
+    "options": ["await", "yield", "defer", "hold"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -605,12 +550,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "An async function always returns:",
-    "options": [
-      "A Promise",
-      "undefined",
-      "the awaited value synchronously",
-      "a callback"
-    ],
+    "options": ["A Promise", "undefined", "the awaited value synchronously", "a callback"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -885,12 +825,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.85,
     "text": "Promise callbacks (.then) are scheduled on the:",
-    "options": [
-      "Microtask queue",
-      "Macrotask queue",
-      "Call stack directly",
-      "Render queue"
-    ],
+    "options": ["Microtask queue", "Macrotask queue", "Call stack directly", "Render queue"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -925,12 +860,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.9,
     "text": "Wrapping a callback API in a promise is called:",
-    "options": [
-      "Promisification",
-      "Currying",
-      "Memoization",
-      "Debouncing"
-    ],
+    "options": ["Promisification", "Currying", "Memoization", "Debouncing"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -965,12 +895,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.15,
     "text": "JavaScript executes user code on:",
-    "options": [
-      "A single main thread",
-      "Multiple threads by default",
-      "The GPU",
-      "No thread"
-    ],
+    "options": ["A single main thread", "Multiple threads by default", "The GPU", "No thread"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1085,12 +1010,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "Which queue do Promise .then callbacks go to?",
-    "options": [
-      "The microtask queue",
-      "The macrotask queue",
-      "The call stack",
-      "The timer queue"
-    ],
+    "options": ["The microtask queue", "The macrotask queue", "The call stack", "The timer queue"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1125,12 +1045,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.42,
     "text": "console.log(1); setTimeout(()=>console.log(2)); Promise.resolve().then(()=>console.log(3)); console.log(4); prints:",
-    "options": [
-      "1 4 3 2",
-      "1 2 3 4",
-      "1 4 2 3",
-      "1 3 4 2"
-    ],
+    "options": ["1 4 3 2", "1 2 3 4", "1 4 2 3", "1 3 4 2"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1205,12 +1120,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.56,
     "text": "In browsers, setTimeout's minimum delay for nested timers is clamped to roughly:",
-    "options": [
-      "4ms",
-      "0ms always",
-      "100ms",
-      "1s"
-    ],
+    "options": ["4ms", "0ms always", "100ms", "1s"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1465,12 +1375,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "Which hook lets you run side effects in a function component?",
-    "options": [
-      "useEffect",
-      "useState",
-      "useMemo",
-      "useRef"
-    ],
+    "options": ["useEffect", "useState", "useMemo", "useRef"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1505,12 +1410,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "Custom hook names should start with:",
-    "options": [
-      "use",
-      "with",
-      "hook",
-      "on"
-    ],
+    "options": ["use", "with", "hook", "on"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1545,12 +1445,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.28,
     "text": "useState(0) initializes the state to:",
-    "options": [
-      "0",
-      "null",
-      "undefined",
-      "an empty array"
-    ],
+    "options": ["0", "null", "undefined", "an empty array"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1585,12 +1480,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.33,
     "text": "Which hook returns a mutable ref object that persists across renders?",
-    "options": [
-      "useRef",
-      "useState",
-      "useEffect",
-      "useReducer"
-    ],
+    "options": ["useRef", "useState", "useEffect", "useReducer"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1625,12 +1515,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.46,
     "text": "Omitting the dependency array entirely in useEffect causes it to run:",
-    "options": [
-      "After every render",
-      "Only once",
-      "Never",
-      "Only on mount"
-    ],
+    "options": ["After every render", "Only once", "Never", "Only on mount"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -1825,12 +1710,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.82,
     "text": "To keep a value across renders without triggering re-renders, use:",
-    "options": [
-      "useRef",
-      "useState",
-      "useMemo",
-      "useEffect"
-    ],
+    "options": ["useRef", "useState", "useMemo", "useEffect"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2005,12 +1885,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.25,
     "text": "Initial state for a counter starting at 0 is set with:",
-    "options": [
-      "useState(0)",
-      "useEffect(0)",
-      "useRef()",
-      "setState()"
-    ],
+    "options": ["useState(0)", "useEffect(0)", "useRef()", "setState()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2065,12 +1940,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.33,
     "text": "A controlled input gets its value from:",
-    "options": [
-      "React state",
-      "The DOM only",
-      "A ref always",
-      "localStorage"
-    ],
+    "options": ["React state", "The DOM only", "A ref always", "localStorage"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2205,12 +2075,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.62,
     "text": "Passing state down to children is done via:",
-    "options": [
-      "Props",
-      "Global variables",
-      "Refs only",
-      "The DOM"
-    ],
+    "options": ["Props", "Global variables", "Refs only", "The DOM"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2445,12 +2310,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "In function components, lifecycle behavior is expressed with:",
-    "options": [
-      "The useEffect hook",
-      "The render method only",
-      "componentDidMount only",
-      "CSS"
-    ],
+    "options": ["The useEffect hook", "The render method only", "componentDidMount only", "CSS"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2465,12 +2325,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "Unmounting is when a component is:",
-    "options": [
-      "Removed from the DOM",
-      "First added to the DOM",
-      "Re-rendered",
-      "Given new props"
-    ],
+    "options": ["Removed from the DOM", "First added to the DOM", "Re-rendered", "Given new props"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2625,12 +2480,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.53,
     "text": "Setting state directly inside the render body causes:",
-    "options": [
-      "An infinite render loop",
-      "A single safe update",
-      "Nothing",
-      "A network call"
-    ],
+    "options": ["An infinite render loop", "A single safe update", "Nothing", "A network call"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2785,12 +2635,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.82,
     "text": "Reading layout (e.g., element size) and synchronously re-rendering is best done in:",
-    "options": [
-      "useLayoutEffect",
-      "useEffect",
-      "the render body",
-      "a ref's constructor"
-    ],
+    "options": ["useLayoutEffect", "useEffect", "the render body", "a ref's constructor"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2905,12 +2750,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "Which method connects a Readable stream to a Writable stream?",
-    "options": [
-      ".pipe()",
-      ".join()",
-      ".connect()",
-      ".merge()"
-    ],
+    "options": [".pipe()", ".join()", ".connect()", ".merge()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2945,12 +2785,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "A Writable stream emits which event when all data has been flushed?",
-    "options": [
-      "'finish'",
-      "'data'",
-      "'open'",
-      "'readable'"
-    ],
+    "options": ["'finish'", "'data'", "'open'", "'readable'"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -2965,12 +2800,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.25,
     "text": "fs.createReadStream returns what kind of stream?",
-    "options": [
-      "A Readable stream",
-      "A Writable stream",
-      "A Duplex socket",
-      "A plain Buffer"
-    ],
+    "options": ["A Readable stream", "A Writable stream", "A Duplex socket", "A plain Buffer"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3005,12 +2835,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "Which stream type is both readable and writable?",
-    "options": [
-      "Duplex",
-      "Readable",
-      "Writable",
-      "Passive"
-    ],
+    "options": ["Duplex", "Readable", "Writable", "Passive"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3185,12 +3010,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.65,
     "text": "Pausing a flowing Readable stream is done with:",
-    "options": [
-      ".pause()",
-      ".stop()",
-      ".halt()",
-      ".end()"
-    ],
+    "options": [".pause()", ".stop()", ".halt()", ".end()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3205,12 +3025,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.72,
     "text": "A custom Readable implements which method to supply data?",
-    "options": [
-      "_read(size)",
-      "_consume()",
-      "_emit()",
-      "read_data()"
-    ],
+    "options": ["_read(size)", "_consume()", "_emit()", "read_data()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3225,12 +3040,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.76,
     "text": "To correctly signal end-of-data from a custom Readable you:",
-    "options": [
-      "push(null)",
-      "return false",
-      "throw EOF",
-      "call end()"
-    ],
+    "options": ["push(null)", "return false", "throw EOF", "call end()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3385,12 +3195,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "Which method registers a listener for an event?",
-    "options": [
-      ".on(name, fn)",
-      ".fire(name)",
-      ".listen(name)",
-      ".bind(name)"
-    ],
+    "options": [".on(name, fn)", ".fire(name)", ".listen(name)", ".bind(name)"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3405,12 +3210,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "To emit an event you call:",
-    "options": [
-      ".emit(name, ...args)",
-      ".trigger(name)",
-      ".send(name)",
-      ".dispatch(name)"
-    ],
+    "options": [".emit(name, ...args)", ".trigger(name)", ".send(name)", ".dispatch(name)"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3485,12 +3285,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "Many core Node objects (streams, servers) inherit from:",
-    "options": [
-      "EventEmitter",
-      "Buffer",
-      "Promise",
-      "Array"
-    ],
+    "options": ["EventEmitter", "Buffer", "Promise", "Array"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3845,12 +3640,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.15,
     "text": "In CommonJS, you export values by assigning to:",
-    "options": [
-      "module.exports",
-      "export default",
-      "window.exports",
-      "global.module"
-    ],
+    "options": ["module.exports", "export default", "window.exports", "global.module"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3865,12 +3655,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "You import a CommonJS module with:",
-    "options": [
-      "require('name')",
-      "import name",
-      "include('name')",
-      "load('name')"
-    ],
+    "options": ["require('name')", "import name", "include('name')", "load('name')"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -3885,12 +3670,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "An ES module imports with:",
-    "options": [
-      "import x from 'name'",
-      "require('name')",
-      "using x",
-      "load x"
-    ],
+    "options": ["import x from 'name'", "require('name')", "using x", "load x"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4085,12 +3865,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.56,
     "text": "Top-level await is allowed in:",
-    "options": [
-      "ES modules",
-      "CommonJS modules",
-      "JSON files",
-      "any function"
-    ],
+    "options": ["ES modules", "CommonJS modules", "JSON files", "any function"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4425,12 +4200,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.28,
     "text": "@classmethod's first parameter is conventionally:",
-    "options": [
-      "cls, the class itself",
-      "self",
-      "this",
-      "obj"
-    ],
+    "options": ["cls, the class itself", "self", "this", "obj"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4445,12 +4215,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "Stacking two decorators @a @b on f means:",
-    "options": [
-      "f = a(b(f))",
-      "f = b(a(f))",
-      "f runs twice",
-      "a and b merge"
-    ],
+    "options": ["f = a(b(f))", "f = b(a(f))", "f runs twice", "a and b merge"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4465,12 +4230,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.33,
     "text": "A decorator must ultimately return:",
-    "options": [
-      "Something callable to replace the original",
-      "None",
-      "A string",
-      "The class"
-    ],
+    "options": ["Something callable to replace the original", "None", "A string", "The class"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4545,12 +4305,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.53,
     "text": "A class can act as a decorator if it implements:",
-    "options": [
-      "__call__",
-      "__init__ only",
-      "__repr__",
-      "__enter__"
-    ],
+    "options": ["__call__", "__init__ only", "__repr__", "__enter__"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4565,12 +4320,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.56,
     "text": "Without functools.wraps, the decorated function's __name__ becomes:",
-    "options": [
-      "The name of the inner wrapper function",
-      "Unchanged",
-      "None",
-      "An error"
-    ],
+    "options": ["The name of the inner wrapper function", "Unchanged", "None", "An error"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4805,12 +4555,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.15,
     "text": "A generator function is defined using:",
-    "options": [
-      "yield inside a function",
-      "return only",
-      "async def",
-      "@generator"
-    ],
+    "options": ["yield inside a function", "return only", "async def", "@generator"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4825,12 +4570,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "Calling a generator function returns:",
-    "options": [
-      "A generator object (an iterator)",
-      "The first value",
-      "A list",
-      "None"
-    ],
+    "options": ["A generator object (an iterator)", "The first value", "A list", "None"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4865,12 +4605,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "You advance a generator with:",
-    "options": [
-      "next(gen)",
-      "gen.run()",
-      "gen.step()",
-      "call(gen)"
-    ],
+    "options": ["next(gen)", "gen.run()", "gen.step()", "call(gen)"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -4925,12 +4660,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.3,
     "text": "When a generator has no more values, next() raises:",
-    "options": [
-      "StopIteration",
-      "IndexError",
-      "ValueError",
-      "EOFError"
-    ],
+    "options": ["StopIteration", "IndexError", "ValueError", "EOFError"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5025,12 +4755,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.53,
     "text": "gen.close() raises inside the generator:",
-    "options": [
-      "GeneratorExit at the paused yield",
-      "StopIteration",
-      "KeyError",
-      "nothing"
-    ],
+    "options": ["GeneratorExit at the paused yield", "StopIteration", "KeyError", "nothing"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5045,12 +4770,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.56,
     "text": "Generators are lazy, so an infinite generator is fine as long as you:",
-    "options": [
-      "Consume only a finite prefix of it",
-      "Call list() on it",
-      "Sort it",
-      "Reverse it"
-    ],
+    "options": ["Consume only a finite prefix of it", "Call list() on it", "Sort it", "Reverse it"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5285,12 +5005,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.15,
     "text": "An async function is declared with:",
-    "options": [
-      "async def",
-      "def async",
-      "@async",
-      "function*"
-    ],
+    "options": ["async def", "def async", "@async", "function*"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5305,12 +5020,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.18,
     "text": "Calling an async function returns:",
-    "options": [
-      "A coroutine object",
-      "Its result directly",
-      "A thread",
-      "None"
-    ],
+    "options": ["A coroutine object", "Its result directly", "A thread", "None"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5325,12 +5035,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.2,
     "text": "Inside an async function you wait on another coroutine with:",
-    "options": [
-      "await",
-      "yield",
-      "return",
-      "wait()"
-    ],
+    "options": ["await", "yield", "return", "wait()"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5345,12 +5050,7 @@
     "difficulty": "basic",
     "difficulty_score": 0.22,
     "text": "To actually run a top-level coroutine you typically use:",
-    "options": [
-      "asyncio.run(main())",
-      "main()",
-      "thread.start()",
-      "run(main)"
-    ],
+    "options": ["asyncio.run(main())", "main()", "thread.start()", "run(main)"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5505,12 +5205,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.53,
     "text": "To run blocking code without stalling the loop, use:",
-    "options": [
-      "asyncio.to_thread / run_in_executor",
-      "time.sleep",
-      "a bare await",
-      "gather"
-    ],
+    "options": ["asyncio.to_thread / run_in_executor", "time.sleep", "a bare await", "gather"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5565,12 +5260,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.62,
     "text": "An 'async with' statement requires the context manager to define:",
-    "options": [
-      "__aenter__ and __aexit__",
-      "__enter__ only",
-      "__call__",
-      "__iter__"
-    ],
+    "options": ["__aenter__ and __aexit__", "__enter__ only", "__call__", "__iter__"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5585,12 +5275,7 @@
     "difficulty": "intermediate",
     "difficulty_score": 0.65,
     "text": "'async for' iterates over an object implementing:",
-    "options": [
-      "__aiter__ and __anext__",
-      "__next__ only",
-      "yield",
-      "__getitem__"
-    ],
+    "options": ["__aiter__ and __anext__", "__next__ only", "yield", "__getitem__"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
@@ -5725,12 +5410,7 @@
     "difficulty": "advanced",
     "difficulty_score": 0.9,
     "text": "Shielding a coroutine from cancellation uses:",
-    "options": [
-      "asyncio.shield",
-      "asyncio.protect",
-      "task.lock()",
-      "await guard"
-    ],
+    "options": ["asyncio.shield", "asyncio.protect", "task.lock()", "await guard"],
     "correct_index": 0,
     "source": "manual",
     "status": "active",
