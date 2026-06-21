@@ -1,11 +1,11 @@
-# AssesAI — Adaptive Assessment Platform
+﻿# AssesAI â€” Adaptive Assessment Platform
 ![CI](https://github.com/arpan23-27/AssesAi/actions/workflows/ci.yml/badge.svg)
 An adaptive quiz platform that targets a learner's weakest concept, adjusts
 question difficulty in real time using a transparent heuristic, and streams
 AI-generated explanations for wrong answers.
 
 The whole platform runs on a **single PostgreSQL database** plus Redis. All
-answer grading and scoring happen on the server — the client is never trusted.
+answer grading and scoring happen on the server â€” the client is never trusted.
 
 ## Tech stack
 
@@ -52,7 +52,7 @@ npm run dev      # http://localhost:5173
 
 ### Trying the API
 
-Import `postman_collection.json` into Postman. Run **Auth → Login** first (its
+Import `postman_collection.json` into Postman. Run **Auth â†’ Login** first (its
 test script stores the access token); the quiz and results requests reuse it
 and chain `sessionId` / `questionId` automatically.
 
@@ -63,7 +63,7 @@ MongoDB while everything else lived in Postgres. For a project of this size that
 is operational overhead with no payoff: a question has a fixed shape, and the
 only semi-structured fields (`options`, generation `metadata`) are stored as
 **JSONB**. Consolidating also made the scoring query a single SQL JOIN between
-`session_answers` and `questions` — impossible when the two sides of that join
+`session_answers` and `questions` â€” impossible when the two sides of that join
 lived in different engines.
 
 **Server-authoritative scoring.** The client never sends a score. `correctCount`
@@ -75,14 +75,14 @@ leaves the API.
 **Answers bound to the active session.** Each session tracks the
 `current_question_id` that was served. An answer is rejected if it doesn't match
 that question, if the question was already answered, or if it belongs to a
-different technology — closing the door on IDOR and score tampering.
+different technology â€” closing the door on IDOR and score tampering.
 
 **Heuristic adaptation, not IRT.** Difficulty is driven by a transparent,
 unit-tested rule: three correct answers in a row promote the learner one tier,
 two wrong in a row demote one tier. Within a tier, the question whose difficulty
 score is closest to the learner's running ability is chosen, and the weakest
 concept is targeted first. This is deliberately a readable heuristic rather than
-a calibrated psychometric model — it keeps latency low and behaviour explainable.
+a calibrated psychometric model â€” it keeps latency low and behaviour explainable.
 
 **Refresh-token rotation.** Refresh tokens are single-use: every refresh issues a
 new token and revokes the old one. Reuse of an already-revoked token revokes the
@@ -94,8 +94,8 @@ Redis holds only the short-lived access-token blacklist.
 
 | Method | Path                              | Auth   | Notes                                 |
 | ------ | --------------------------------- | ------ | ------------------------------------- |
-| POST   | `/api/auth/register`              | —      | Argon2id password hashing             |
-| POST   | `/api/auth/login`                 | —      | Returns access token + refresh cookie |
+| POST   | `/api/auth/register`              | â€”      | Argon2id password hashing             |
+| POST   | `/api/auth/login`                 | â€”      | Returns access token + refresh cookie |
 | POST   | `/api/auth/refresh`               | cookie | Rotates the refresh token             |
 | POST   | `/api/auth/logout`                | yes    | Revokes refresh token, blacklists JTI |
 | POST   | `/api/quiz/sessions`              | yes    | Start a session                       |
@@ -155,22 +155,23 @@ npm install        # runs husky setup via the prepare script
 
 ```
 AssesAi/
-├── docker-compose.yml          # one-command app + postgres + redis
-├── postman_collection.json
-├── .github/workflows/ci.yml
-├── backend/
-│   └── src/
-│       ├── config/             # db, redis, AI client
-│       ├── middleware/         # auth, validation, rate limiting, RBAC, errors
-│       ├── migrations/         # ordered SQL (run by src/migrate.js)
-│       ├── modules/            # auth, quiz, ai, results
-│       ├── repositories/       # data-access layer (all PostgreSQL)
-│       ├── seeds/              # technologies + question bank
-│       ├── tests/              # Jest unit + integration tests
-│       └── migrate.js          # idempotent migration runner
-└── frontend/
-    └── src/
-        ├── api/                # axios instance with refresh interceptor
-        ├── features/           # auth, quiz, results pages
-        └── store/              # Zustand stores
+â”œâ”€â”€ docker-compose.yml          # one-command app + postgres + redis
+â”œâ”€â”€ postman_collection.json
+â”œâ”€â”€ .github/workflows/ci.yml
+â”œâ”€â”€ backend/
+â”‚   â””â”€â”€ src/
+â”‚       â”œâ”€â”€ config/             # db, redis, AI client
+â”‚       â”œâ”€â”€ middleware/         # auth, validation, rate limiting, RBAC, errors
+â”‚       â”œâ”€â”€ migrations/         # ordered SQL (run by src/migrate.js)
+â”‚       â”œâ”€â”€ modules/            # auth, quiz, ai, results
+â”‚       â”œâ”€â”€ repositories/       # data-access layer (all PostgreSQL)
+â”‚       â”œâ”€â”€ seeds/              # technologies + question bank
+â”‚       â”œâ”€â”€ tests/              # Jest unit + integration tests
+â”‚       â””â”€â”€ migrate.js          # idempotent migration runner
+â””â”€â”€ frontend/
+    â””â”€â”€ src/
+        â”œâ”€â”€ api/                # axios instance with refresh interceptor
+        â”œâ”€â”€ features/           # auth, quiz, results pages
+        â””â”€â”€ store/              # Zustand stores
 ```
+
