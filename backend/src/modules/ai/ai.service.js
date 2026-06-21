@@ -11,6 +11,7 @@ const {
 } = require('./prompts');
 const { AppError } = require('../../utils/errors');
 const { z } = require('zod');
+const EXPLAIN_MODEL = process.env.GROQ_EXPLAIN_MODEL || 'openai/gpt-oss-20b';
 
 /**
  * Stream an explanation for a wrong answer back to the client via SSE.
@@ -62,7 +63,7 @@ async function explainAnswer({ questionId, wrongAnswerIndex, userId, res, req })
   let stream;
   try {
     stream = await openai.chat.completions.create({
-      model: 'llama-3.1-8b-instant',
+      model: EXPLAIN_MODEL,
       stream: true,
       temperature: 0.3,
       messages: [
@@ -112,7 +113,7 @@ function writeSseHeaders(res) {
  * status='pending_review', so they never enter the live pool until an admin
  * promotes them to 'active'.
  */
-const GENERATION_MODEL = 'llama-3.3-70b-versatile';
+const GENERATION_MODEL = process.env.GROQ_GENERATION_MODEL || 'openai/gpt-oss-120b';
 
 // Tier → representative difficulty_score, matching the manual seed banding.
 const DIFFICULTY_SCORE = { basic: 0.25, intermediate: 0.55, advanced: 0.85 };
