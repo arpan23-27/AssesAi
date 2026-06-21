@@ -1,6 +1,15 @@
 // src/modules/quiz/controller.js
 const quizService = require('./service');
 
+async function listTechnologies(req, res, next) {
+  try {
+    const technologies = await quizService.listTechnologies();
+    res.status(200).json({ data: technologies });
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function startSession(req, res, next) {
   try {
     const userId = req.user.sub;
@@ -37,4 +46,4 @@ async function completeSession(req, res, next) {
   }
 }
 
-module.exports = { startSession, submitAnswer, completeSession };
+module.exports = { listTechnologies, startSession, submitAnswer, completeSession };

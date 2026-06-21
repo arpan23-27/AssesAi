@@ -10,6 +10,17 @@ import ThemeToggle from '../../components/ThemeToggle'
 // fetch (for SSE streaming) rather than an axios call, so it needs the URL too.
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
+// Display metadata keyed by the technology's stored name. The real id and
+// question count come from the API at runtime — we never assume the database id,
+// so the quiz cards stay correct no matter how the technologies table was seeded.
+const TECH_META = {
+  javascript: { label: 'JavaScript', tag: 'closures · promises · event-loop' },
+  react: { label: 'React', tag: 'hooks · state · lifecycle' },
+  nodejs: { label: 'Node.js', tag: 'streams · events · modules' },
+  python: { label: 'Python', tag: 'decorators · generators · async' },
+  sql: { label: 'SQL', tag: 'queries · joins · indexing' },
+}
+
 export default function Quiz() {
   const [quizState, setQuizState] = useState('idle')
   const [session, setSession] = useState(null)
@@ -27,6 +38,25 @@ export default function Quiz() {
   const user = useAuthStore(s => s.user)
   const clearAuth = useAuthStore(s => s.clearAuth)
   const navigate = useNavigate()
+
+  // Load the real technologies (id + name + question_count) from the API and
+  // join them with the display metadata above. Falls back gracefully if the
+  // call fails so the page still renders.
+  const { data: techData } = useQuery({
+    queryKey: ['technologies'],
+    queryFn: async () => {
+      const res = await api.get('/quiz/technologies')
+      return res.data.data
+    },
+    staleTime: 5 * 60 * 1000,
+  })
+  const technologies = (techData || [])
+    .map(t => ({
+      id: t.id,
+      name: TECH_META[t.name]?.label || t.name,
+      tag: TECH_META[t.name]?.tag || t.name,
+      questions: t.question_count,
+    }))
 
   const { data: masteryData } = useQuery({
     queryKey: ['mastery'],
@@ -268,12 +298,7 @@ export default function Quiz() {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '28px' }}>
-              {[
-                { id: 1, name: 'JavaScript', tag: 'closures · promises · event-loop', questions: 72 },
-                { id: 2, name: 'React', tag: 'hooks · state · lifecycle', questions: 72 },
-                { id: 3, name: 'Node.js', tag: 'streams · events · modules', questions: 72 },
-                { id: 4, name: 'Python', tag: 'decorators · generators · async', questions: 72 },
-              ].map(tech => (
+              {technologies.map(tech => (
                 <div
                   key={tech.id}
                   onClick={() => !loading && startQuiz(tech.id, difficulty)}

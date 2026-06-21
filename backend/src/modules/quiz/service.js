@@ -16,6 +16,16 @@ const { AppError } = require('../../utils/errors');
 
 const DEFAULT_ABILITY = 0.5;
 
+/**
+ * Technologies the learner can start a quiz in: those with active questions,
+ * each with its real database id and question count. The client uses these ids
+ * rather than assuming them, so the quiz cards stay correct regardless of how
+ * the technologies table was seeded.
+ */
+async function listTechnologies() {
+  return technologyRepository.findAllWithQuestions();
+}
+
 // Strip the correct answer before a question ever leaves the server.
 function toClientQuestion(question) {
   if (!question) return null;
@@ -203,6 +213,7 @@ async function completeSession({ sessionId, userId }) {
 }
 
 module.exports = {
+  listTechnologies,
   startSession,
   submitAnswer,
   completeSession,

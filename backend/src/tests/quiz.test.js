@@ -83,6 +83,19 @@ describe('Quiz routes', () => {
     expect(res.body.firstQuestion).not.toHaveProperty('correct_index');
   });
 
+  it('lists technologies with their real ids and a question count', async () => {
+    const res = await request(app)
+      .get('/api/quiz/technologies')
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body.data)).toBe(true);
+    const mine = res.body.data.find((t) => t.id === technologyId);
+    expect(mine).toBeTruthy();
+    expect(mine.name).toBe(techName);
+    expect(mine.question_count).toBeGreaterThanOrEqual(3);
+  });
+
   it('grades a correct answer server-side (isCorrect true)', async () => {
     const start = await startSession();
     const q = start.body.firstQuestion;

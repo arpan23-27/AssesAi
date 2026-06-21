@@ -6,6 +6,9 @@ const { startSessionSchema, submitAnswerSchema, sessionIdParamSchema } = require
 const validate = require('../../middleware/validate');
 const auth = require('../../middleware/auth');
 
+// GET /technologies -> list technologies (with real ids) that have questions
+router.get('/technologies', auth, quizController.listTechnologies);
+
 // POST /sessions -> start a new session
 router.post('/sessions', auth, validate(startSessionSchema), quizController.startSession);
 
